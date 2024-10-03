@@ -29,4 +29,4 @@ frontend
 
 ## Dependencies
 
-**server**: express typescript ts-node @types/express @types/node passport passport-jwt jsonwebtoken bcryptjs pg @types/pg
+**server**: express typescript ts-node @types/express @types/node passport passport-jwt jsonwebtoken bcryptjs pg @types/pg dotenv

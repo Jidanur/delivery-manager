@@ -4,7 +4,9 @@
 
 ### server
 
-backend
+This is the root folder for our backend.
+
+Current directory structure:
 
 server/
 ├── src/
@@ -25,8 +27,27 @@ server/
 
 ### client
 
-frontend
+This is the root folder for our frontend.
 
 ## Dependencies
 
 **server**: express typescript ts-node @types/express @types/node passport passport-jwt jsonwebtoken bcryptjs pg @types/pg dotenv
+
+**frontend**:
+
+## .env setup
+
+#Example setup
+PORT=3000
+JWT_SECRET=paste-the-generated-string-here
+DB_HOST=localhost
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_NAME=your_db_name
+
+To generate a random JWT secret key, you can use a tool like Node.js to create a random string. Here's a simple example:
+
+1. Open your terminal
+2. Run the following Node.js script to generate a random string:
+   `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
+3. Replace it at `JWT_SECRET=paste-the-generated-string-here`

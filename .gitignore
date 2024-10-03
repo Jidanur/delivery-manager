@@ -1,0 +1,71 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Build files
+build/
+dist/
+.cache/
+.vscode/
+.eslintcache
+coverage/
+*.tgz
+*.zip
+
+# Database & Secrets
+*.sqlite3
+*.pgdata
+*.psql
+
+# IDEs & Editors (VSCode, JetBrains, Sublime, etc.)
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temporary system files
+*.swp
+*.swo
+*.tmp
+*.bak
+*.pid
+*.seed
+*.pid.lock
+
+# React specific
+/build/
+*.lock
+
+# Production environment variables (for security reasons)
+.env.production
+
+# Others
+*.log
+.cache
+public/tmp

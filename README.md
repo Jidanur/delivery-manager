@@ -35,9 +35,9 @@ server/
 
 ### Prerequisites
 
-- Node.js (v10.2.4 or later)
+- Node.js (v20.11.1 or later)
 - PostgreSQL
-- npm
+- npm (v10.2.4 or later)
 
 ### Backend Setup
 

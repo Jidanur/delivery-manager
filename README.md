@@ -67,7 +67,7 @@ To install the dependencies run:
 
 ## .env setup
 
-#Example setup
+**Example setup**
 PORT=3000
 JWT_SECRET=paste-the-generated-string-here
 DB_HOST=localhost

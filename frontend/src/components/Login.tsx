@@ -16,12 +16,39 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //TODO: Handle login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setError("");
+
+    // Validate form data
+    if (!email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    //TODO: Add the correct api address
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      console.log("Login successful:", data);
+      //TODO: Handle successful login (e.g., save token, redirect)
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Login failed. Please try again.");
+    }
   };
 
   return (
@@ -38,8 +65,13 @@ function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {"Login"}
+          Sign in
         </Typography>
+        {error && (
+          <Typography color="error" variant="body2">
+            {error}
+          </Typography>
+        )}
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -75,12 +107,12 @@ function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            {"Sign In"}
+            Sign In
           </Button>
           <Grid2 container spacing={8}>
             <Grid2>
               <Link href="#" variant="body2">
-                {"Forgot password?"}
+                Forgot password?
               </Link>
             </Grid2>
             <Grid2>

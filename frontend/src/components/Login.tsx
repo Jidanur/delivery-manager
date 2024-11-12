@@ -6,10 +6,10 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
-  Grid,
   Box,
   Typography,
   Container,
+  Grid2,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
@@ -77,18 +77,18 @@ function Login() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
+          <Grid2 container spacing={8}>
+            <Grid2>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
-            <Grid item>
+            </Grid2>
+            <Grid2>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {"Sign Up"}
               </Link>
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </Box>
       </Box>
     </Container>

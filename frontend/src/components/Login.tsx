@@ -19,7 +19,7 @@ function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
+    //TODO: Handle login logic here
     console.log("Email:", email);
     console.log("Password:", password);
   };
@@ -38,7 +38,7 @@ function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          {"Login"}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -75,12 +75,12 @@ function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            {"Sign In"}
           </Button>
           <Grid2 container spacing={8}>
             <Grid2>
               <Link href="#" variant="body2">
-                Forgot password?
+                {"Forgot password?"}
               </Link>
             </Grid2>
             <Grid2>

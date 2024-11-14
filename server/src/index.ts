@@ -1,29 +1,30 @@
+import bcrypt from 'bcryptjs';
 import dotenv from "dotenv";
-import express from "express";
+import express, { Request, Response } from "express";
+import { AppDataSource } from "./config/ormconfig";
 import { errorHandler } from "./middleware/errorMiddleware";
-import authRoutes from "./routes/auth";
-import { AppDataSource } from "./ormconfig";
+import authRoutes from "./routes/authRoutes";
+
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+
 app.use(express.json());
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 app.use(errorHandler);
 
-app.get("/", (req, res) => {
-  res.send("API is working!");
-});
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.get("/", (req: Request, res: Response) => {
+  res.send("API is working!");
 });
 
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
+    
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });

@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
-  expiresIn: number;
+  exp: number;
   user_id: number;
   role: string;
 }
@@ -27,7 +27,7 @@ const ProtectedRoute = ({
   const decodedToken: DecodedToken = jwtDecode(token);
   const currentTime = Date.now() / 1000;
 
-  if (decodedToken.expiresIn < currentTime) {
+  if (decodedToken.exp < currentTime) {
     // Token has expired
     localStorage.removeItem("token");
     localStorage.removeItem("role");

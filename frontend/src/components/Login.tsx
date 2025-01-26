@@ -12,18 +12,25 @@ import {
   Grid2,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  //i save the token here for the session nd sue it to make subsequent requests
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     // Validate form data
-    if (!email || !password) {
+    if (!formData.email || !formData.password) {
       setError("Please fill in all fields");
       return;
     }
@@ -34,7 +41,10 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({
+          username: formData.email,
+          password: formData.password,
+        }),
       });
 
       if (!response.ok) {
@@ -43,7 +53,17 @@ function Login() {
 
       const data = await response.json();
       console.log("Login successful:", data);
-      //TODO: Handle successful login (e.g., save token, redirect)
+
+      localStorage.setItem("token", data.token);
+
+      //main routing based on the role of the user
+      if (data.role === "admin") {
+        navigate("/admin");
+      } else if (data.role === "user") {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Error:", error);
       setError("Login failed. Please try again.");
@@ -81,8 +101,8 @@ function Login() {
             name="email"
             autoComplete="email"
             autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
           />
           <TextField
             margin="normal"
@@ -93,8 +113,8 @@ function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

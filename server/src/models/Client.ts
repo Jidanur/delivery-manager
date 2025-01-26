@@ -23,6 +23,6 @@ export class Client {
   @JoinColumn({ name: "user_id" })
   user!: User;
 
-  @OneToMany(() => Package, (pack) => pack.client)
+  @OneToMany(() => Package, (Package) => Package.client)
   pack!: Package[];
 }

@@ -24,6 +24,6 @@ export class Driver {
   @JoinColumn({ name: "user_id" })
   user!: User;
 
-  @OneToMany(() => Package, (pack) => pack.driver)
+  @OneToMany(() => Package, (Package) => Package.driver)
   pack!: Package[];
 }

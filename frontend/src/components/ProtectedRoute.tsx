@@ -29,6 +29,8 @@ const ProtectedRoute = ({
 
   if (decodedToken.exp < currentTime) {
     // Token has expired
+    //TODO: Currently the user will have to login every 1h
+    // Implement token refreshing and change token time to 15m
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     return <Navigate to="/login" />;

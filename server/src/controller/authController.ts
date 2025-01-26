@@ -54,7 +54,7 @@ export const login = async (req: any, res: any) => {
     }
 
     const token = jwt.sign({ user_id: user.user_id }, jwtSecret, {
-      expiresIn: process.env.JWT_EXPIRATION || "15m",
+      expiresIn: process.env.JWT_EXPIRATION || "1h", //TODO: change token time when token refreshing implemented
     });
 
     return res

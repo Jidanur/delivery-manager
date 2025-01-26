@@ -10,12 +10,16 @@ import ManagerPage from "./pages/ManagerPage";
 import DriverPage from "./pages/DriverPage";
 import ClientPage from "./pages/ClientPage";
 
+//Component imports
+import Logout from "./components/authentication/Logout";
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/logout" element={<Logout />} />
         <Route
           path="/manager"
           element={

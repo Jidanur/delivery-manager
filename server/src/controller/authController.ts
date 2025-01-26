@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { AppDataSource } from "../config/ormconfig";
 import { User } from "../models/User";
 
-const jwtSecret = process.env.JWT_SECRET || "default_secret";
+const jwtSecret = process.env.JWT_SECRET || "default_secret"; //TODO: fix this lateryo
 
 export const createUser = async (req: any, res: any) => {
   const { username, password, role } = req.body;

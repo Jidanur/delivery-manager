@@ -28,14 +28,13 @@ function Login() {
       return;
     }
 
-    //TODO: Add the correct api address
     try {
-      const response = await fetch("", {
+      const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username: email, password }),
       });
 
       if (!response.ok) {

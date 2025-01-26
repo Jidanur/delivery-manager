@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "deliever-manager-br",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

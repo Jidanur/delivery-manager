@@ -28,7 +28,6 @@ function Login() {
       return;
     }
 
-    //TODO: Add the correct api address
     try {
       const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",

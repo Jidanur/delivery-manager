@@ -1,0 +1,26 @@
+meta {
+  name: create
+  type: http
+  seq: 3
+}
+
+post {
+  url: 127.0.0.1:3000/auth/create
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "jidan",
+    "password": "p123",
+    "role":"manager"
+  }
+}
+
+body:text {
+  {
+    "username": "jidan",
+  "password": "p123"
+  }
+}

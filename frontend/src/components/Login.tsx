@@ -54,13 +54,10 @@ function Login() {
       const data = await response.json();
       console.log("Login successful:", data);
 
-      //TODO: Shold i use local store or session storage what are the pros and cons of each, what suits my situation more
+      //persists data even after browser is closed
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
 
-      //TODO: check if the routes match the roles
-      // check what the roles are match accordingly
-      //main routing based on the role of the user
       if (data.role === "manager") {
         navigate("/manager");
       } else if (data.role === "driver") {

@@ -26,7 +26,7 @@ function Login() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); //TODO: what is this?
     setError("");
 
     // Validate form data
@@ -54,15 +54,21 @@ function Login() {
       const data = await response.json();
       console.log("Login successful:", data);
 
+      //TODO: Shold i use local store or session storage what are the pros and cons of each, what suits my situation more
       localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
 
+      //TODO: check if the routes match the roles
+      // check what the roles are match accordingly
       //main routing based on the role of the user
-      if (data.role === "admin") {
-        navigate("/admin");
-      } else if (data.role === "user") {
-        navigate("/dashboard");
+      if (data.role === "manager") {
+        navigate("/manager");
+      } else if (data.role === "driver") {
+        navigate("/driver");
+      } else if (data.role === "client") {
+        navigate("/client");
       } else {
-        navigate("/");
+        setError("Undefined role. Please contact support.");
       }
     } catch (error) {
       console.error("Error:", error);

@@ -1,48 +1,56 @@
-// import jwt from "jsonwebtoken";
-// import { Request, Response, NextFunction } from "express";
+import { NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
-// interface JwtPayload {
-//   id: string;
-// }
+const jwtSecret = process.env.JWT_SECRET || "default_secret";
 
-// /*
-//     This middleware protects certain routes which will require authentication
-//     for our scenario all three types of users: drivers, businesses, 
-//     and admins require authentication
-// */
 
-// const protect = (req: Request, res: Response, next: NextFunction) => {
-//   let token;
+export interface JwtPayload {
+  user_id: number;
+  username: string;
+  role: string;
+}
 
-//   // Check if the authorization header is present and starts with "Bearer"
-//   if (
-//     req.headers.authorization &&
-//     req.headers.authorization.startsWith("Bearer")
-//   ) {
-//     try {
-//       // Extract the token from the authorization header
-//       token = req.headers.authorization.split(" ")[1];
+// Extend the Request interface to include the user property
+declare global {
+  namespace Express {
+    interface Request {
+      user?: JwtPayload;
+    }
+  }
+}
 
-//       // Verify the token
-//       const decoded = jwt.verify(
-//         token,
-//         process.env.JWT_SECRET || ""
-//       ) as JwtPayload;
+/**
+ * Middleware to protect routes requiring authentication.
+ * Works for all user types: drivers, businesses, and admins.
+ */
+export const protect = async (req: any, res: any, next: NextFunction) => {
+  const authHeader = req.headers.authorization;
 
-//       // Attach the user information to the request object
-//       req.user = { id: decoded.id }; // This needs to come from a real DB
+  // Ensure the JWT secret is defined
+  if (!jwtSecret) {
+    throw new Error("JWT_SECRET is not defined in the environment variables");
+  }
 
-//       // Pass control to the next middleware/handler
-//       next();
-//     } catch (error) {
-//       console.error("Error verifying token:", error);
-//       // Return 401 (Unauthorized) if token verification fails
-//       return res.status(401).json({ message: "Not authorized, token failed" });
-//     }
-//   } else {
-//     // Return 401 (Unauthorized) if no token is found
-//     return res.status(401).json({ message: "Not authorized, no token" });
-//   }
-// };
+  if (authHeader && authHeader.startsWith("Bearer")) {
+    const token = authHeader.split(" ")[1];
 
-// export { protect };
+    try {
+      // Verify and decode the token
+      const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
+
+      // Attach the decoded payload to the request object
+      req.user = decoded;
+
+      // Pass control to the next middleware/handler
+      return next();
+    } catch (error) {
+      console.error("Error verifying token:", error);
+      return res.status(401).json({ message: "Not authorized, invalid token" });
+    }
+  }
+
+  // Return 401 (Unauthorized) if no token is provided
+  return res.status(401).json({ message: "Not authorized, no token provided" });
+};
+
+

@@ -7,19 +7,16 @@ export class Package {
   @PrimaryGeneratedColumn()
   package_id!: number;
 
-  @Column({ type: "decimal", precision: 10, scale: 2 })
-  weight!: number;
-
-  @Column({ length: 50, nullable: true })
-  dimensions?: string;
-
   @Column("text")
-  destination_address!: string;
+  delivery_address!: string;
+
+  @Column({ type: "varchar", length: 3, default: null })
+  delivery_zone!: string ;
 
   @Column({ type: "varchar", length: 20, default: "pending" })
-  status!: "pending" | "in_transit" | "delivered";
+  delivery_status!: "pending" | "in_transit" | "delivered";
 
-  @ManyToOne(() => Client, (client) => client.pack, { onDelete: "CASCADE" })
+  @ManyToOne(() => Client, (client) => client.pack, { onDelete: "SET NULL" })
   @JoinColumn({ name: "client_id" })
   client!: Client;
 

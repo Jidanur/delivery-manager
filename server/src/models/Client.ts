@@ -19,10 +19,26 @@ export class Client {
   @Column("text", { nullable: true })
   address?: string;
 
+  @Column()
+  user_id!: number;
+
   @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn({ name: "user_id" })
   user!: User;
 
   @OneToMany(() => Package, (Package) => Package.client)
   pack!: Package[];
+
+
+  getInfo() {
+    return {
+      client_id: this.client_id,
+      name: this.name,
+      email: this.email,
+      phone: this.phone || null,
+      address: this.address || null,
+      //user: this.user, // Returns the related User entity
+      //packages: this.pack, // Returns the related Package entities
+    };}
+
 }

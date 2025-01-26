@@ -3,7 +3,7 @@ import express, { Request, Response } from "express";
 import { AppDataSource } from "./config/ormconfig";
 import { errorHandler } from "./middleware/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
-
+import userRoutes from "./routes/userRoutes";
 
 dotenv.config();
 
@@ -13,6 +13,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 
 

@@ -18,7 +18,6 @@ function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  //i save the token here for the session nd sue it to make subsequent requests
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,7 +68,7 @@ function Login() {
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("Login failed. Please try again.");
+      setError(error.message || "Login failed. Please try again.");
     }
   };
 

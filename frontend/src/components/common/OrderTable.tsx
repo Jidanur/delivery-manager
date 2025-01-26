@@ -18,9 +18,9 @@ interface Column {
 
 interface GeneralTableProps {
   columns: Column[];
-  data: any[];
-  onEdit?: (row: any) => void;
-  onDelete?: (id: any) => void;
+  //data: any[];
+  //onEdit?: (row: any) => void;
+  //onDelete?: (id: any) => void;
 }
 
 const GeneralTable: React.FC<GeneralTableProps> = ({

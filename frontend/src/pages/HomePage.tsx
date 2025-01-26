@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import { Container, Typography, Button, Paper, Box } from "@mui/material";
+//import Logo from "../components/common/Logo";
+import AltLogo from "../components/common/AltLogo";
 
 const HomePage = () => {
   return (
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundImage: "url(/path/to/your/background-image.jpg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#f0f0f0",
       }}
     >
       <Container component="main" maxWidth="md">
@@ -22,18 +22,15 @@ const HomePage = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
           }}
         >
+          <AltLogo width={150} marginBottom={20} />
           <Typography component="h1" variant="h3" gutterBottom>
             Welcome to Delivery Manager
           </Typography>
           <Typography variant="h5" gutterBottom>
             Manage your deliveries efficiently and effectively.
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Our platform helps managers, drivers, and clients to streamline the
-            delivery process, ensuring timely and accurate deliveries.
           </Typography>
           <Button
             variant="contained"

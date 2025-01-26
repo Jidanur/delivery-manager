@@ -5,16 +5,16 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 //Page imports
 import LoginPage from "./pages/LoginPage";
-//import ManagerPage from "./pages/ManagerPage";
-//import DriverPage from "./pages/DriverPage";
-//import ClientPage from "./pages/ClientPage";
+import ManagerPage from "./pages/ManagerPage";
+import DriverPage from "./pages/DriverPage";
+import ClientPage from "./pages/ClientPage";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route
+        <Route
           path="/manager"
           element={
             <ProtectedRoute role="manager">
@@ -37,8 +37,7 @@ function App() {
               <ClientPage />
             </ProtectedRoute>
           }
-        /> */}
-        {/* Add other routes as needed */}
+        />
       </Routes>
     </Router>
   );

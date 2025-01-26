@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 //HOC
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/authentication/ProtectedRoute";
 
 //Page imports
 import HomePage from "./pages/HomePage";

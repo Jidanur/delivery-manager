@@ -89,6 +89,43 @@ export const deleteUser = async(req:any, res:any) =>{
 
 }
 
+
+export const getUser = async (req: any, res: any) => {
+
+    const {id} = req.params;
+
+    try{
+        const userPayload = req.user;
+
+        if(userPayload.role !== 'manager') {
+            return res.status(403).json({ message: 'Access denied' });
+        }
+    
+        const userRepository = AppDataSource.getRepository(User);
+        
+        let findUser = await userRepository.findOneBy({user_id:id});
+        // Fetch all users with their associated client or driver details
+        
+        if(findUser){
+            findUser = await userRepository.findOne({ where:{user_id:id}, 
+                relations: ['client', 'driver', 'manager'],
+            });
+        }
+        else{
+            return res.status(500).json({ message: "User not found"});
+        }
+        
+  
+      return res.status(200).json(findUser);
+    } 
+
+    catch(error:any){
+        return res.status(500).json({ message: "Internal server error" , error:error.message});
+    }
+
+
+}
+
 export const getAllUsers = async (req: any, res: any) => {
 
     try{

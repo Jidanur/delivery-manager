@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Driver } from './Driver';
 import { User } from "./User";
-import { Driver } from "./Driver";
 
 @Entity("managers")
 export class Manager {
@@ -16,10 +16,24 @@ export class Manager {
   @Column({ length: 15, nullable: true })
   phone?: string;
 
+  @Column()
+  user_id!:number;
+
   @OneToOne(() => User, { onDelete: "CASCADE" })
   @JoinColumn({ name: "user_id" })
   user!: User;
 
   @OneToMany(() => Driver, (driver) => driver.manager)
   drivers!: Driver[];
+
+
+  getInfo() {
+    return {
+      manager_id: this.manager_id,
+      name: this.name,
+      email: this.email,
+      phone: this.phone || null,
+      //user: this.user, // Returns the related User entity
+      //packages: this.pack, // Returns the related Package entities
+    };}
 }

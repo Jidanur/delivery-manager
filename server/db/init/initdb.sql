@@ -53,6 +53,6 @@ CREATE TABLE packages (
 );
 
 -- Optional Indexes for faster queries
-CREATE INDEX idx_packages_status ON packages(status);
+CREATE INDEX idx_packages_status ON packages(delivery_status);
 CREATE INDEX idx_packages_client_id ON packages(client_id);
 CREATE INDEX idx_packages_driver_id ON packages(driver_id);

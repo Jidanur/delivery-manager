@@ -1,5 +1,5 @@
 import Logo from "./Logo";
-import altLogo from "../../assets/logo-alt.png";
+import altLogo from "../../../assets/logo-alt.png";
 
 interface AltLogoProps {
   width?: string | number;

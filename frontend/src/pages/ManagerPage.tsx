@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Box, Container, Typography, Paper, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Container, Typography, Paper } from "@mui/material";
 
 import Sidebar from "../components/common/Sidebar";
 

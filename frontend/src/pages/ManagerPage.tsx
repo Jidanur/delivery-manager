@@ -1,15 +1,8 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  Paper,
-  List,
-  ListItemButton,
-  ListItemText,
-  Button,
-} from "@mui/material";
+import { useState } from "react";
+import { Box, Container, Typography, Paper, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import Sidebar from "../components/common/Sidebar";
 
 const ManagerPage = () => {
   const [selectedSection, setSelectedSection] = useState("Drivers");
@@ -18,6 +11,8 @@ const ManagerPage = () => {
   const handleNavigation = (section: string) => {
     setSelectedSection(section);
   };
+
+  const sections = ["Drivers", "Clients", "Orders"];
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -31,53 +26,14 @@ const ManagerPage = () => {
           boxShadow: 1,
         }}
       >
-        <Box>
-          {/* Sidebar Header */}
-          <Box
-            sx={{
-              padding: 2,
-              backgroundColor: "primary.main",
-              color: "white",
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="h5">Manager Dashboard</Typography>
-          </Box>
-
-          {/* Sidebar Navigation */}
-          <List>
-            <ListItemButton
-              selected={selectedSection === "Drivers"}
-              onClick={() => handleNavigation("Drivers")}
-            >
-              <ListItemText primary="Drivers" />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedSection === "Clients"}
-              onClick={() => handleNavigation("Clients")}
-            >
-              <ListItemText primary="Clients" />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedSection === "Orders"}
-              onClick={() => handleNavigation("Orders")}
-            >
-              <ListItemText primary="Orders" />
-            </ListItemButton>
-          </List>
-        </Box>
-
-        {/* Logout Button */}
-        <Box sx={{ padding: 2 }}>
-          <Button
-            fullWidth
-            variant="contained"
-            color="secondary"
-            component={Link}
-            to="/logout"
-          >
-            Logout
-          </Button>
+        <Box sx={{ display: "flex", height: "100vh" }}>
+          {/* Sidebar */}
+          <Sidebar
+            sections={sections}
+            selectedSection={selectedSection}
+            onNavigate={handleNavigation}
+            logoutPath="/logout"
+          />
         </Box>
       </Box>
 

@@ -29,6 +29,7 @@ export class Manager {
 
   getInfo() {
     return {
+      role: this.user.role,
       manager_id: this.manager_id,
       name: this.name,
       email: this.email,

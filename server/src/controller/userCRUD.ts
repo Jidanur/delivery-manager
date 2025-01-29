@@ -22,7 +22,7 @@ export const createUser = async (req: any, res: any) => {
     const validInfo = validateFields(info, ['name', 'email', 'phone']);
     
     if (!validInfo) {
-        return res.status(400).json({ message: "Need more info's['name', 'email', 'phone'] to register"});
+        return res.status(400).json({ message: "Missing required fields: name, email, phone"});
     }
 
     // Hash the password
@@ -37,22 +37,31 @@ export const createUser = async (req: any, res: any) => {
 
     await userRepository.save(newUser);
 
+    
+    let success = false;
+
     if(role == "driver"){
-        createDriver(info, newUser);
+        success = await createDriver(info, newUser);
     }
     else if(role == "client"){
-        createClient(info, newUser);
+      success = await createClient(info, newUser);
     }
     else if(role == "manager" ){ /// need to add some restriction who can create manager
-        createManager(info, newUser);
+      success = await createManager(info, newUser);
     }
     else {
         return res.status(400).json({ message: 'Invalid role specified' });
       }
 
     
+    if(success){
+      return res.status(201).json({ message: "User created successfully" });
+    }
+    else{
+      return res.status(400).json({ message: "${role} already exists, please check info" });
+    }
     
-    return res.status(201).json({ message: "User created successfully" });
+    
   } catch (error) {
     console.error("Error creating user:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -173,17 +182,20 @@ export const getUserInfo = async (req: any, res: any) => {
       const clientRepository = AppDataSource.getRepository(Client);
       record = await clientRepository.findOne({
         where: { user_id: currUser.user_id },
+        relations:['packages', 'user'],
       });
     } else if (currUser.role === "driver") {
       const driverRepository = AppDataSource.getRepository(Driver);
       record = await driverRepository.findOne({
         where: { user_id: currUser.user_id },
+        relations:['packages', 'user'],
       });
     }
     else if(currUser.role === "manager"){
         const managerRepository = AppDataSource.getRepository(Manager);
         record = await managerRepository.findOne({
             where: { user_id: currUser.user_id },
+            relations:['user'],
         });
     }
 
@@ -206,19 +218,25 @@ const createClient = async(info:any, user:User) =>{
     //validateFields(info, ['name', 'email', 'phone'])
 
     // Check if client already exists
-    await checkIfExists(clientRepository, { name:info.name, email: info.email, phone: info.phone }, 'Client');
+    const exists = await checkIfExists(clientRepository, { name:info.name, email: info.email, phone: info.phone }, 'Client');
 
-    const newClient = clientRepository.create({
+    if(exists === null){
+      const newClient = clientRepository.create({
         name: info.name,
         email: info.email,
         phone: info.phone,
         address: info.address || '',
         user:user,
       });
-    
-    
+
       await clientRepository.save(newClient);
 
+      return true;
+    
+    }
+    
+    
+    return false;
 
 }
 
@@ -229,16 +247,23 @@ const createDriver = async (info:any, user:User) => {
     //validateFields(info, ['name', 'email', 'phone']);
   
     // Check if driver already exists
-    await checkIfExists(driverRepository, { name:info.name, email: info.email, phone: info.phone }, 'Driver');
-  
-    const newDriver = driverRepository.create({
-      name: info.name,
-      email: info.email,
-      phone: info.phone,
-      user:user,
-    });
-  
-    await driverRepository.save(newDriver);
+    const exists =await checkIfExists(driverRepository, { name:info.name, email: info.email, phone: info.phone }, 'Driver');
+
+    if(exists === null){
+      const newDriver = driverRepository.create({
+        name: info.name,
+        email: info.email,
+        phone: info.phone,
+        user:user,
+      });
+    
+      await driverRepository.save(newDriver);
+      return true;
+
+    }
+
+    return false;
+
   };
 
 
@@ -249,20 +274,26 @@ const createDriver = async (info:any, user:User) => {
     //validateFields(info, ['name', 'email', 'phone']);
   
     // Check if manager already exists
-    await checkIfExists(managerRepository, { name:info.name, email: info.email, phone: info.phone }, 'Manager');
-  
-    const newManager = managerRepository.create({
-      name: info.name,
-      email: info.email,
-      phone: info.phone,
-      user:user,
-    });
-  
-    await managerRepository.save(newManager);
+    const exists = await checkIfExists(managerRepository, { name:info.name, email: info.email, phone: info.phone }, 'Manager');
+    
+    if(exists === null){
+        const newManager = managerRepository.create({
+        name: info.name,
+        email: info.email,
+        phone: info.phone,
+        user:user,
+        });
+        await managerRepository.save(newManager);
+
+        return true;
+    }
+
+    return false;
+    
   };
 
 
-const validateFields = (fields:any, requiredFields:any) => {
+export const validateFields = (fields:any, requiredFields:any) => {
     let valid = true;
     for (const field of requiredFields) {
       if (!fields[field]) {
@@ -277,4 +308,5 @@ const checkIfExists = async (repository:Repository<any>, conditions:any, entityN
     if (existingRecord) {
       console.error("${entityName} with the specified values already exists");
     }
+    return existingRecord
   };

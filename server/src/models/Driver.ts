@@ -24,22 +24,24 @@ export class Driver {
   @Column()
   user_id!:number;
 
-  @OneToOne(() => User, { onDelete: "CASCADE" })
+  @OneToOne(() => User, (user) => user.driver)
   @JoinColumn({ name: "user_id" })
   user!: User;
 
+  //@OneToMany(() => Package, (Package) => Package.driver, { eager: true }) 
   @OneToMany(() => Package, (Package) => Package.driver)
-  pack!: Package[];
+  packages!: Package[];
 
 
   getInfo() {
     return {
+      role: this.user.role,
       driver_id: this.driver_id,
       name: this.name,
       email: this.email,
       phone: this.phone || null,
       manager: this.manager?.name || null,
       //user: this.user, // Returns the related User entity
-      //packages: this.pack, // Returns the related Package entities
+      packages: this.packages, // Returns the related Package entities
     };}
 }

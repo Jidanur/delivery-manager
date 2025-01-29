@@ -60,15 +60,21 @@ export const createPackage = async(req:any, res:any) => {
 export const updatePackage = async (req: any, res: any) => {
     const userPayload = req.user;
     const { packageId, updateInfo } = req.body;
+
+    //// transactional database update --- to keep data consistant
+    const queryRunner = AppDataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
   
     try {
-      const packageRepository = AppDataSource.getRepository(Package);
+      const packageRepository = queryRunner.manager.getRepository(Package);
       const existingPackage = await packageRepository.findOne({
         where: { package_id: packageId },
         relations: ["client", "driver"],
       });
   
       if (!existingPackage) {
+        await queryRunner.rollbackTransaction();
         return res.status(404).json({ message: "Package not found." });
       }
   
@@ -78,10 +84,12 @@ export const updatePackage = async (req: any, res: any) => {
         relations: ['client', 'driver'],});
 
       if (userPayload.role === "client" && existingPackage.client?.client_id !== cuur_user?.client.client_id) {
+        await queryRunner.rollbackTransaction();
         return res.status(403).json({ message: "You do not have permission to update this package." });
       }
 
       if(userPayload === 'driver' && existingPackage.driver?.driver_id !== cuur_user?.driver.driver_id){
+        await queryRunner.rollbackTransaction();
         return res.status(403).json({ message: "You do not have permission to update this package." });
       }
       
@@ -104,14 +112,19 @@ export const updatePackage = async (req: any, res: any) => {
       if(updateInfo.order_comment) existingPackage.order_comment = updateInfo.order_comment;
 
       const updatedPackage = await packageRepository.save(existingPackage);
-  
+      
+      await queryRunner.commitTransaction();
       return res.status(200).json({
         message: "Package updated successfully.",
         package: updatedPackage,
       });
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       console.error("Error updating package:", error);
       return res.status(500).json({ message: "Internal server error." });
+    }
+    finally{
+      queryRunner.release();
     }
   };
 

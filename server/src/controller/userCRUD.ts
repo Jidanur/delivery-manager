@@ -73,18 +73,26 @@ export const updateUser = async (req: any, res: any) => {
   const { id } = req.params;
   const { username, password, info } = req.body;
 
+  //// transactional database update --- to keep data consistant
+  const queryRunner = AppDataSource.createQueryRunner();
+  await queryRunner.connect();
+  await queryRunner.startTransaction();
+
   try {
-    const userRepository = AppDataSource.getRepository(User);
     const userPayload = req.user;
+
+    const userRepository = queryRunner.manager.getRepository(User);
 
     // Find the user to update
     const userToUpdate = await userRepository.findOneBy({ user_id: id });
     if (!userToUpdate) {
+      await queryRunner.rollbackTransaction();
       return res.status(404).json({ message: "User not found" });
     }
 
     // Authorization check
     if (userPayload.role !== 'manager' && userPayload.user_id !== userToUpdate.user_id) {
+      await queryRunner.rollbackTransaction();
       return res.status(403).json({ message: "Not authorized to update this user" });
     }
 
@@ -92,6 +100,7 @@ export const updateUser = async (req: any, res: any) => {
     if (username) {
       const existingUser = await userRepository.findOneBy({ username });
       if (existingUser && existingUser.user_id !== userToUpdate.user_id) {
+        await queryRunner.rollbackTransaction();
         return res.status(400).json({ message: "Username is already taken" });
       }
       userToUpdate.username = username;
@@ -107,7 +116,7 @@ export const updateUser = async (req: any, res: any) => {
     // Update role-specific information
     if (info) {
       if (userToUpdate.role === "client") {
-        const clientRepository = AppDataSource.getRepository(Client);
+        const clientRepository = AppDataSource.manager.getRepository(Client);
         let client = await clientRepository.findOneBy({ user: userToUpdate });
         if (client) {
           client.name = info.name || client.name;
@@ -117,7 +126,7 @@ export const updateUser = async (req: any, res: any) => {
           await clientRepository.save(client);
         }
       } else if (userToUpdate.role === "driver") {
-        const driverRepository = AppDataSource.getRepository(Driver);
+        const driverRepository = AppDataSource.manager.getRepository(Driver);
         let driver = await driverRepository.findOneBy({ user: userToUpdate });
         if (driver) {
           driver.name = info.name || driver.name;
@@ -126,7 +135,7 @@ export const updateUser = async (req: any, res: any) => {
           await driverRepository.save(driver);
         }
       } else if (userToUpdate.role === "manager") {
-        const managerRepository = AppDataSource.getRepository(Manager);
+        const managerRepository = queryRunner.manager.getRepository(Manager);
         let manager = await managerRepository.findOneBy({ user: userToUpdate });
         if (manager) {
           manager.name = info.name || manager.name;
@@ -137,10 +146,15 @@ export const updateUser = async (req: any, res: any) => {
       }
     }
 
+    await queryRunner.commitTransaction()
     return res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
+    await queryRunner.rollbackTransaction()
     console.error("Error updating user:", error);
     return res.status(500).json({ message: "Internal server error" });
+  }
+  finally{
+    await queryRunner.release();
   }
 };
 
@@ -149,8 +163,13 @@ export const deleteUser = async(req:any, res:any) =>{
 
     const{ id } = req.params;
 
+    //// transactional database update --- to keep data consistant
+    const queryRunner = AppDataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
     try{
-        const userRepository = AppDataSource.getRepository(User);
+        const userRepository = queryRunner.manager.getRepository(User);
         const userPayload = req.user;
 
         // Find the current user by ID
@@ -158,18 +177,24 @@ export const deleteUser = async(req:any, res:any) =>{
         
 
         if(currUser?.role == 'manager'){
-            const UserTodelete = await userRepository.findOneBy({ user_id: id });
-            await userRepository.delete({user_id: UserTodelete?.user_id});
+          const UserTodelete = await userRepository.findOneBy({ user_id: id });
+          await userRepository.delete({user_id: UserTodelete?.user_id});
         }
         else if( id != currUser?.user_id){
-            return res.status(400).json({ message:"Not authorized to delete this user"});
+          await queryRunner.rollbackTransaction();
+          return res.status(400).json({ message:"Not authorized to delete this user"});
         }
 
+        await queryRunner.commitTransaction();
         return res.status(200).json({ message: 'User deleted successfully' });
 
     }
     catch(error:any){
-        return res.status(400).json({ message: error.message });
+      await queryRunner.rollbackTransaction();
+      return res.status(400).json({ message: error.message });
+    }
+    finally{
+      await queryRunner.release();
     }
 
 }

@@ -69,6 +69,82 @@ export const createUser = async (req: any, res: any) => {
 };
 
 
+export const updateUser = async (req: any, res: any) => {
+  const { id } = req.params;
+  const { username, password, info } = req.body;
+
+  try {
+    const userRepository = AppDataSource.getRepository(User);
+    const userPayload = req.user;
+
+    // Find the user to update
+    const userToUpdate = await userRepository.findOneBy({ user_id: id });
+    if (!userToUpdate) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Authorization check
+    if (userPayload.role !== 'manager' && userPayload.user_id !== userToUpdate.user_id) {
+      return res.status(403).json({ message: "Not authorized to update this user" });
+    }
+
+    // Update fields if provided
+    if (username) {
+      const existingUser = await userRepository.findOneBy({ username });
+      if (existingUser && existingUser.user_id !== userToUpdate.user_id) {
+        return res.status(400).json({ message: "Username is already taken" });
+      }
+      userToUpdate.username = username;
+    }
+
+    if (password) {
+      const saltRounds = 10;
+      userToUpdate.password_hash = await bcrypt.hash(password, saltRounds);
+    }
+
+    await userRepository.save(userToUpdate);
+
+    // Update role-specific information
+    if (info) {
+      if (userToUpdate.role === "client") {
+        const clientRepository = AppDataSource.getRepository(Client);
+        let client = await clientRepository.findOneBy({ user: userToUpdate });
+        if (client) {
+          client.name = info.name || client.name;
+          client.email = info.email || client.email;
+          client.phone = info.phone || client.phone;
+          client.address = info.address || client.address;
+          await clientRepository.save(client);
+        }
+      } else if (userToUpdate.role === "driver") {
+        const driverRepository = AppDataSource.getRepository(Driver);
+        let driver = await driverRepository.findOneBy({ user: userToUpdate });
+        if (driver) {
+          driver.name = info.name || driver.name;
+          driver.email = info.email || driver.email;
+          driver.phone = info.phone || driver.phone;
+          await driverRepository.save(driver);
+        }
+      } else if (userToUpdate.role === "manager") {
+        const managerRepository = AppDataSource.getRepository(Manager);
+        let manager = await managerRepository.findOneBy({ user: userToUpdate });
+        if (manager) {
+          manager.name = info.name || manager.name;
+          manager.email = info.email || manager.email;
+          manager.phone = info.phone || manager.phone;
+          await managerRepository.save(manager);
+        }
+      }
+    }
+
+    return res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 export const deleteUser = async(req:any, res:any) =>{
 
     const{ id } = req.params;

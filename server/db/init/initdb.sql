@@ -54,7 +54,7 @@ CREATE TABLE packages (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP,
     order_instructions TEXT DEFAULT NULL, -- Special instructions for the order
-    order_comment TEXT DEFAULT NULL, -- Additional comments on the order
+    order_comment TEXT DEFAULT NULL -- Additional comments on the order
 );
 
 -- Optional Indexes for faster queries

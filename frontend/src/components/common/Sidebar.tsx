@@ -1,4 +1,3 @@
-import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,7 +11,19 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ sections, selectedSection, onNavigate, logoutPath }) => {
+interface SidebarProps {
+  sections: string[];
+  selectedSection: string;
+  onNavigate: (section: string) => void;
+  logoutPath: string;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({
+  sections,
+  selectedSection,
+  onNavigate,
+  logoutPath,
+}) => {
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       {/* AppBar for the top section */}

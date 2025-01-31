@@ -1,19 +1,24 @@
+import cors from 'cors';
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import { AppDataSource } from "./config/ormconfig";
 import { errorHandler } from "./middleware/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
-
+import packageRoutes from "./routes/packageRoutes";
+import userRoutes from "./routes/userRoutes";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Enable CORS for all origins
+app.use(cors());
 
 app.use(express.json());
 app.use("/auth", authRoutes);
-
+app.use("/user", userRoutes);
+app.use("/package", packageRoutes);
 
 
 app.get("/", (req: Request, res: Response) => {

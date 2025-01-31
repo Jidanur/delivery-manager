@@ -5,35 +5,6 @@ import { User } from "../models/User";
 
 const jwtSecret = process.env.JWT_SECRET || "default_secret"; //TODO: fix this lateryo
 
-export const createUser = async (req: any, res: any) => {
-  const { username, password, role } = req.body;
-
-  try {
-    // Check if the username already exists
-    const userRepository = AppDataSource.getRepository(User);
-    const existingUser = await userRepository.findOneBy({ username });
-
-    if (existingUser) {
-      return res.status(400).json({ message: "Username is already taken" });
-    }
-
-    // Hash the password
-    const saltRounds = 10;
-    const passwordHash = await bcrypt.hash(password, saltRounds);
-
-    const newUser = userRepository.create({
-      username,
-      password_hash: passwordHash,
-      role,
-    });
-
-    await userRepository.save(newUser);
-    return res.status(201).json({ message: "User created successfully" });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
 
 // Login endpoint
 export const login = async (req: any, res: any) => {
@@ -53,7 +24,7 @@ export const login = async (req: any, res: any) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    const token = jwt.sign({ user_id: user.user_id }, jwtSecret, {
+    const token = jwt.sign({ user_id: user.user_id, username:user.username, role:user.role }, jwtSecret, {
       expiresIn: process.env.JWT_EXPIRATION || "1h", //TODO: change token time when token refreshing implemented
     });
 

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Container, Typography, Button, Paper, Box } from "@mui/material";
-//import Logo from "../components/common/Logo";
-import AltLogo from "../components/common/AltLogo";
+import AltLogo from "../components/common/logo/AltLogo";
 
 const HomePage = () => {
   return (

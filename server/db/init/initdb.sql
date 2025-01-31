@@ -43,17 +43,22 @@ CREATE TABLE drivers (
 -- Packages Table
 CREATE TABLE packages (
     package_id SERIAL PRIMARY KEY,
-    weight DECIMAL(10, 2) NOT NULL,
-    dimensions VARCHAR(50),
-    destination_address TEXT NOT NULL,
-    status VARCHAR(20) DEFAULT 'pending', -- e.g., pending, in_transit, delivered
-    client_id INT REFERENCES clients(client_id) ON DELETE CASCADE,
+    delivery_address TEXT NOT NULL,
+    delivery_zone VARCHAR(3) DEFAULT NULL,
+    delivery_status VARCHAR(20) DEFAULT 'pending', -- e.g., pending, in_transit, delivered
+    service_type VARCHAR(50),
+    client_id INT REFERENCES clients(client_id) ON DELETE SET NULL,
     driver_id INT REFERENCES drivers(driver_id) ON DELETE SET NULL,
     pickup_time TIMESTAMP,
-    delivery_time TIMESTAMP
+    delivery_time TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP,
+    order_instructions TEXT DEFAULT NULL, -- Special instructions for the order
+    order_comment TEXT DEFAULT NULL -- Additional comments on the order
 );
 
 -- Optional Indexes for faster queries
-CREATE INDEX idx_packages_status ON packages(status);
+CREATE INDEX idx_packages_zone ON packages(delivery_zone);
+CREATE INDEX idx_packages_status ON packages(delivery_status);
 CREATE INDEX idx_packages_client_id ON packages(client_id);
 CREATE INDEX idx_packages_driver_id ON packages(driver_id);

@@ -20,3 +20,15 @@ export interface UserUpdateData {
     address?: string;
   };
 }
+
+export interface UserInfo {
+  id: number;
+  username: string;
+  role: string;
+  info: {
+    name: string;
+    email: string;
+    phone: string;
+    address?: string;
+  };
+}

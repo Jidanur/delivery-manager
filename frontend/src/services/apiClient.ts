@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const backendUrl = "http://localhost:3000"; // Change this to your backend URL
+//TODO: Set this up in the env file
+const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000"; // Change this to your backend URL
 
 // Create an Axios instance with base configuration
 const apiClient = axios.create({
@@ -30,10 +31,17 @@ apiClient.interceptors.response.use(
   (error) => {
     console.error("API call failed:", error);
     // Handle specific error cases
-    if (error.response.status === 401) {
-      console.error("Unauthorized");
-    } else if (error.response.status === 404) {
-      console.error("Not found");
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          console.error("Unauthorized");
+          break;
+        case 404:
+          console.error("Not found");
+          break;
+        default:
+          console.error(`Error: ${error.response.status}`);
+      }
     }
     return Promise.reject(error);
   }

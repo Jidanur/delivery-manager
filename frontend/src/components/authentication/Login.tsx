@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../../services/authService";
 
 function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -35,27 +36,8 @@ function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/user/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await response.json();
+      const data = await authService.login(formData);
       console.log("Login successful:", data);
-
-      //persists data even after browser is closed
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
 
       if (data.role === "manager") {
         navigate("/manager");

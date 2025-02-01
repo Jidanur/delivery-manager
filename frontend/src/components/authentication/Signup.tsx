@@ -130,7 +130,7 @@ function Signup() {
             Sign Up
           </Button>
           <Link href="/login" variant="body2">
-            Already have an account? Sign in
+            Already have an account?
           </Link>
         </Box>
       </Box>

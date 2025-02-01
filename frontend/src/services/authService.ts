@@ -1,20 +1,10 @@
 import apiClient from "./apiClient";
-
-interface LoginData {
-  email: string;
-  password: string;
-}
-
-interface AuthResponse {
-  token: string;
-  role: string;
-}
+import { LoginData, AuthResponse } from "../types/authInterface";
 
 export const authService = {
   async login(formData: LoginData): Promise<AuthResponse> {
     const response = await apiClient.post("/auth/login", formData);
 
-    // Store token in localStorage
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("role", response.data.role);
 

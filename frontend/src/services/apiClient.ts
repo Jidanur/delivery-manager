@@ -5,6 +5,7 @@ const backendUrl = "http://localhost:3000"; // Change this to your backend URL
 // Create an Axios instance with base configuration
 const apiClient = axios.create({
   baseURL: backendUrl,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },

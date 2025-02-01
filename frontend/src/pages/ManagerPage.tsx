@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Container, Typography, Paper } from "@mui/material";
 
 import Sidebar from "../components/common/Sidebar";
+import TableSection from "../components/common/Table/TableSection";
 
 const ManagerPage = () => {
   const [selectedSection, setSelectedSection] = useState("Drivers");
@@ -54,28 +55,22 @@ const ManagerPage = () => {
           <Paper sx={{ padding: 3 }}>
             {/* Dynamic Content Placeholder */}
             {selectedSection === "Drivers" && (
-              <Box>
-                <Typography variant="h6">Drivers</Typography>
-                <Typography variant="body1" color="text.secondary">
-                  Placeholder content for managing drivers.
-                </Typography>
-              </Box>
+              <TableSection
+                title="Drivers"
+                content="Placeholder content for managing drivers."
+              />
             )}
             {selectedSection === "Clients" && (
-              <Box>
-                <Typography variant="h6">Clients</Typography>
-                <Typography variant="body1" color="text.secondary">
-                  Placeholder content for managing clients.
-                </Typography>
-              </Box>
+              <TableSection
+                title="Clients"
+                content="Placeholder content for managing clients."
+              />
             )}
             {selectedSection === "Orders" && (
-              <Box>
-                <Typography variant="h6">Orders</Typography>
-                <Typography variant="body1" color="text.secondary">
-                  Placeholder content for managing orders.
-                </Typography>
-              </Box>
+              <TableSection
+                title="Orders"
+                content="Placeholder content for managing Orders."
+              />
             )}
           </Paper>
         </Container>

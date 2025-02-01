@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage";
 import ManagerPage from "./pages/ManagerPage";
 import DriverPage from "./pages/DriverPage";
 import ClientPage from "./pages/ClientPage";
+import SignupPage from "./pages/SignupPage";
 
 //Component imports
 import Logout from "./components/authentication/Logout";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route
           path="/manager"
           element={

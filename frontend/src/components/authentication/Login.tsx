@@ -25,7 +25,7 @@ function Login() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); //TODO: what is this?
+    e.preventDefault();
     setError("");
 
     // Validate form data
@@ -35,7 +35,7 @@ function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch("http://localhost:3000/user/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -141,7 +141,7 @@ function Login() {
               </Link>
             </Grid2>
             <Grid2>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"Sign Up"}
               </Link>
             </Grid2>

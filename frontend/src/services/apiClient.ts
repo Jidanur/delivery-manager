@@ -9,7 +9,7 @@ import {
 } from "../errors/CustomErrors";
 
 //TODO: Set this up in the env file
-const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000"; // Change this to your backend URL
+const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000"; // Change this to your backend URL
 
 // Create an Axios instance with base configuration
 const apiClient = axios.create({

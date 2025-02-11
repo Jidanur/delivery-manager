@@ -1,12 +1,12 @@
-import apiClient from "./apiClient";
 import { AxiosError } from "axios";
-import { UserData, UserUpdateData, UserInfo } from "../types/userInterfaces";
+import { UserData, UserInfo, UserUpdateData } from "../types/userInterfaces";
 import { handleApiError } from "../utils/errorHandler";
+import apiClient from "./apiClient";
 
 export const userService = {
   async createUser(userData: UserData): Promise<UserInfo> {
     try {
-      const response = await apiClient.post("/createUser", userData);
+      const response = await apiClient.post("/user/create", userData);
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
@@ -18,7 +18,7 @@ export const userService = {
     userData: UserUpdateData
   ): Promise<UserInfo> {
     try {
-      const response = await apiClient.put(`/updateUser/${userId}`, userData);
+      const response = await apiClient.put(`/user/updateUser/${userId}`, userData);
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
@@ -27,25 +27,25 @@ export const userService = {
 
   async deleteUser(userId: number): Promise<UserInfo> {
     try {
-      const response = await apiClient.delete(`/deleteUser/${userId}`);
+      const response = await apiClient.delete(`/user/deleteUser/${userId}`);
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
     }
   },
 
-  async getUserInfo(userId: number): Promise<UserInfo> {
+  async getUserInfo(): Promise<UserInfo> {
     try {
-      const response = await apiClient.get(`/getUserInfo/${userId}`);
+      const response = await apiClient.get(`/user/getUserInfo`);
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
     }
   },
 
-  async getAllUsers(): Promise<UserInfo> {
+  async getAllUsers(): Promise<any> {
     try {
-      const response = await apiClient.get("/getAllUsers");
+      const response = await apiClient.get("/user/getAll");
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
@@ -54,7 +54,7 @@ export const userService = {
 
   async getUser(userId: number): Promise<UserInfo> {
     try {
-      const response = await apiClient.get(`/getUser/${userId}`);
+      const response = await apiClient.get(`/user/get/${userId}`);
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);

@@ -1,65 +1,81 @@
-import { useState } from "react";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Avatar,
-  Button,
-  TextField,
-  Link,
   Box,
-  Typography,
+  Button,
   Container,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  Link,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userService } from "../../services/userService"; // Adjust the import path accordingly
+import { UserData, UserInfo } from "../../types/userInterfaces"; // Assuming the types are in a 'types.ts' file
 
 function Signup() {
-  const [formData, setFormData] = useState({
-    email: "",
+  const [formData, setFormData] = useState<UserData>({
+    username: "",
     password: "",
-    confirmPassword: "",
+    role: "",
+    info: {
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+    },
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | { name: string; value: unknown }>
+  ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => {
+      if (name === "role") {
+        return { ...prevData, role: value as string };
+      }
+      
+      if (name.startsWith("info.")) {
+        const field = name.split(".")[1];
+        return {
+          ...prevData,
+          info: { ...prevData.info, [field]: value },
+        };
+      }
+      return { ...prevData, [name]: value };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    if (!formData.email || !formData.password || !formData.confirmPassword) {
-      setError("Please fill in all fields");
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+    if (
+      !formData.username ||
+      !formData.password ||
+      !formData.role ||
+      !formData.info.name ||
+      !formData.info.email ||
+      !formData.info.phone
+    ) {
+      setError("Please fill in all required fields");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:3000/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Signup failed");
-      }
-
-      console.log("Signup successful");
-      navigate("/login");
+      const userInfo: UserInfo = await userService.createUser(formData);
+      console.log("Signup successful", userInfo);
+      navigate("/login");  // Redirect to login after successful signup
     } catch (error) {
-      console.error("Error:", error);
-      setError(error instanceof Error ? error.message : "Signup failed.");
+      console.error("Error during signup:", error);
+      setError("Signup failed. Please try again.");
     }
   };
 
@@ -89,13 +105,13 @@ function Signup() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={formData.email}
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            value={formData.username}
             onChange={handleChange}
+            autoFocus
           />
           <TextField
             margin="normal"
@@ -113,14 +129,59 @@ function Signup() {
             margin="normal"
             required
             fullWidth
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            id="confirmPassword"
-            autoComplete="new-password"
-            value={formData.confirmPassword}
+            name="info.name"
+            label="Full Name"
+            id="name"
+            value={formData.info.name}
             onChange={handleChange}
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="info.email"
+            label="Email Address"
+            id="email"
+            autoComplete="email"
+            value={formData.info.email}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="info.phone"
+            label="Phone Number"
+            id="phone"
+            value={formData.info.phone}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            name="info.address"
+            label="Address"
+            id="address"
+            value={formData.info.address || ""}
+            onChange={handleChange}
+          />
+
+          {/* Role Selection Dropdown */}
+          <FormControl fullWidth margin="normal" required error={!!error}>
+            <InputLabel>Role</InputLabel>
+            <Select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              label="Role"
+            >
+              <MenuItem value="manager">Manager</MenuItem>
+              <MenuItem value="client">Client</MenuItem>
+              <MenuItem value="driver">Driver</MenuItem>
+            </Select>
+            {error && <FormHelperText>{error}</FormHelperText>}
+          </FormControl>
+
           <Button
             type="submit"
             fullWidth
@@ -130,7 +191,7 @@ function Signup() {
             Sign Up
           </Button>
           <Link href="/login" variant="body2">
-            Already have an account?
+            Already have an account? Sign In
           </Link>
         </Box>
       </Box>

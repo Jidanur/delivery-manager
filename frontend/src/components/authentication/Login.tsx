@@ -1,22 +1,22 @@
-import { useState } from "react";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Avatar,
-  Button,
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Link,
   Box,
-  Typography,
+  Button,
+  Checkbox,
   Container,
+  FormControlLabel,
   Grid2,
+  Link,
+  TextField,
+  Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
 
 function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ function Login() {
     setError("");
 
     // Validate form data
-    if (!formData.email || !formData.password) {
+    if (!formData.username || !formData.password) {
       setError("Please fill in all fields");
       return;
     }
@@ -84,12 +84,12 @@ function Login() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Email Address or username"
+            name="username"
+            autoComplete="username"
             autoFocus
-            value={formData.email}
+            value={formData.username}
             onChange={handleChange}
           />
           <TextField

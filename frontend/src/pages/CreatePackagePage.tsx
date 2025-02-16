@@ -140,6 +140,12 @@ const CreatePackagePage = () => {
             value={packageData.order_instructions || ""}
             onChange={handleChange}
           />
+          <TextField
+            label="Order Comment"
+            name="order_comment"
+            value={packageData.order_comment || ""}
+            onChange={handleChange}
+          />
           <Button type="submit" variant="contained" color="primary">
             Create Order
           </Button>

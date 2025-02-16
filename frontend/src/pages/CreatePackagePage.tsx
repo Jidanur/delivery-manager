@@ -9,15 +9,14 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { packageService } from "../services/packageService";
+import { PackageData } from "../types/packageInterfaces";
 
 const CreatePackagePage = () => {
-  const [packageData, setPackageData] = useState({
-    // Add necessary fields here
-    clientName: "",
-    deliveryAddress: "",
-    deliveryZone: "",
-    deliveryStatus: "Pending",
-    driverName: "",
+  const [packageData, setPackageData] = useState<PackageData>({
+    delivery_address: "",
+    delivery_zone: "",
+    service_type: "",
+    client_id: undefined,
   });
   const navigate = useNavigate();
 
@@ -49,29 +48,29 @@ const CreatePackagePage = () => {
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
           <TextField
-            label="Client Name"
-            name="clientName"
-            value={packageData.clientName}
-            onChange={handleChange}
-            required
-          />
-          <TextField
             label="Delivery Address"
-            name="deliveryAddress"
-            value={packageData.deliveryAddress}
+            name="delivery_address"
+            value={packageData.delivery_address}
             onChange={handleChange}
             required
           />
           <TextField
             label="Delivery Zone"
-            name="deliveryZone"
-            value={packageData.deliveryZone}
+            name="delivery_zone"
+            value={packageData.delivery_zone}
             onChange={handleChange}
           />
           <TextField
-            label="Driver Name"
-            name="driverName"
-            value={packageData.driverName}
+            label="Service Type"
+            name="service_type"
+            value={packageData.service_type}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Client ID"
+            name="client_id"
+            type="number"
+            value={packageData.client_id || ""}
             onChange={handleChange}
           />
           <Button type="submit" variant="contained" color="primary">

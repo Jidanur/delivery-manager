@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../../services/authService";
 
 const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    authService.logout();
     navigate("/login");
   }, [navigate]);
 

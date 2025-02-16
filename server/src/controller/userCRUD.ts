@@ -58,7 +58,8 @@ export const createUser = async (req: any, res: any) => {
       return res.status(201).json({ message: "User created successfully" });
     }
     else{
-      return res.status(400).json({ message: "${role} already exists, please check info" });
+      userRepository.delete(newUser);
+      return res.status(400).json({ message: role + " already exists, please check info" });
     }
     
     

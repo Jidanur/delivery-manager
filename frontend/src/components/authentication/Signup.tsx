@@ -10,6 +10,7 @@ import {
   Link,
   MenuItem,
   Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from "@mui/material";
@@ -33,10 +34,32 @@ function Signup() {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | { name: string; value: unknown }>
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => {
+  //     if (name === "role") {
+  //       return { ...prevData, role: value as string };
+  //     }
+      
+  //     if (name.startsWith("info.")) {
+  //       const field = name.split(".")[1];
+  //       return {
+  //         ...prevData,
+  //         info: { ...prevData.info, [field]: value },
+  //       };
+  //     }
+  //     return { ...prevData, [name]: value };
+  //   });
+  // };
+
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | { name: string; value: unknown }>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
   ) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target ;
+
     setFormData((prevData) => {
       if (name === "role") {
         return { ...prevData, role: value as string };
@@ -169,12 +192,7 @@ function Signup() {
           {/* Role Selection Dropdown */}
           <FormControl fullWidth margin="normal" required error={!!error}>
             <InputLabel>Role</InputLabel>
-            <Select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              label="Role"
-            >
+            <Select name="role" value={formData.role} onChange={handleChange} label="Role">
               <MenuItem value="manager">Manager</MenuItem>
               <MenuItem value="client">Client</MenuItem>
               <MenuItem value="driver">Driver</MenuItem>

@@ -6,10 +6,12 @@ import {
   TextField,
   Typography,
   MenuItem,
+  CircularProgress,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { packageService } from "../services/packageService";
+import { userService } from "../services/userService";
 import {
   PackageData,
   ServiceType,
@@ -26,7 +28,27 @@ const CreatePackagePage = () => {
     order_comment: "",
     service_type: ServiceType.STANDARD,
   });
+  const [clients, setClients] = useState<any[]>([]);
+  const [drivers, setDrivers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true);
+      try {
+        const allUsers = await userService.getAllUsers();
+        setClients(allUsers.filter((user: any) => user.role === "client"));
+        setDrivers(allUsers.filter((user: any) => user.role === "driver"));
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -90,20 +112,42 @@ const CreatePackagePage = () => {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
-            label="Client ID"
-            name="client_id"
-            type="number"
-            value={packageData.client_id || ""}
-            onChange={handleChange}
-          />
-          <TextField
-            label="Driver ID"
-            name="driver_id"
-            type="number"
-            value={packageData.driver_id || ""}
-            onChange={handleChange}
-          />
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <TextField
+                select
+                label="Client ID"
+                name="client_id"
+                value={packageData.client_id || ""}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              >
+                {clients.map((client) => (
+                  <MenuItem key={client.client_id} value={client.client_id}>
+                    {client.username}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                select
+                label="Driver ID"
+                name="driver_id"
+                value={packageData.driver_id || ""}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              >
+                {drivers.map((driver) => (
+                  <MenuItem key={driver.driver_id} value={driver.driver_id}>
+                    {driver.username}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </>
+          )}
           <TextField
             label="Pickup Time"
             name="pickup_time"

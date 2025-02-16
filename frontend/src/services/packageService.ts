@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { PackageInfo, PackageData } from "../types/packageInterfaces";
+import { PackageData, PackageInfo } from "../types/packageInterfaces";
 import { handleApiError } from "../utils/errorHandler";
 import apiClient from "./apiClient";
 
@@ -60,7 +60,7 @@ export const packageService = {
     }
   },
 
-  async getAllPackages(): Promise<PackageInfo[]> {
+  async getAllPackages(): Promise<any> {
     try {
       const response = await apiClient.get("/package/getAll");
       return response.data;

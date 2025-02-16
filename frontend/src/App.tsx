@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ManagerPage from "./pages/ManagerPage";
 import SignupPage from "./pages/SignupPage";
+import CreatePackagePage from "./pages/CreatePackagePage";
 
 //Component imports
 import Logout from "./components/authentication/Logout";
@@ -27,6 +28,14 @@ function App() {
           element={
             <ProtectedRoute role="manager">
               <ManagerPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-package"
+          element={
+            <ProtectedRoute role="manager">
+              <CreatePackagePage />
             </ProtectedRoute>
           }
         />

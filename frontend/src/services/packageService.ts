@@ -1,28 +1,38 @@
 import { AxiosError } from "axios";
-import { PackageData, PackageInfo, PackageUpdateData } from "../types/packageInterfaces";
+import { PackageInfo, PackageData } from "../types/packageInterfaces";
 import { handleApiError } from "../utils/errorHandler";
 import apiClient from "./apiClient";
 
 export const packageService = {
   async createPackage(packageData: PackageData): Promise<PackageInfo> {
     try {
-      const response = await apiClient.post("/package/create", { packageInfo: packageData });
+      const response = await apiClient.post("/package/create", {
+        packageInfo: packageData,
+      });
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
     }
   },
 
-  async updatePackage(packageId: number, updateData: PackageUpdateData): Promise<PackageInfo> {
+  async updatePackage(
+    packageId: number,
+    updateData: PackageData
+  ): Promise<PackageInfo> {
     try {
-      const response = await apiClient.put(`/package/update`, { packageId, updateInfo: updateData });
+      const response = await apiClient.put(`/package/update`, {
+        packageId,
+        updateInfo: updateData,
+      });
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
     }
   },
 
-  async deletePackage(packageId: number): Promise<{ message: string; packageId: number }> {
+  async deletePackage(
+    packageId: number
+  ): Promise<{ message: string; packageId: number }> {
     try {
       const response = await apiClient.delete(`/package/delete/${packageId}`);
       return response.data;
@@ -46,16 +56,17 @@ export const packageService = {
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
-        return [];
+      return [];
     }
   },
 
-  async getAllPackages(): Promise<any> {
+  async getAllPackages(): Promise<PackageInfo[]> {
     try {
       const response = await apiClient.get("/package/getAll");
       return response.data;
     } catch (error) {
       handleApiError(error as AxiosError);
+      return [];
     }
   },
 };

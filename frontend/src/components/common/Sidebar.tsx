@@ -10,12 +10,14 @@ import {
   Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { ReactNode } from "react";
 
 interface SidebarProps {
   sections: string[];
   selectedSection: string;
   onNavigate: (section: string) => void;
   logoutPath: string;
+  children?: ReactNode;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -23,6 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   selectedSection,
   onNavigate,
   logoutPath,
+  children,
 }) => {
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -65,6 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </List>
         </Box>
         <Box sx={{ marginTop: "auto", padding: 2 }}>
+          {children}
           <Button
             fullWidth
             variant="contained"

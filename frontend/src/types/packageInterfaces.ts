@@ -1,10 +1,3 @@
-export interface PackageData {
-    delivery_address: string;
-    delivery_zone?: string;
-    service_type?: string;
-    client_id?: number;
-  }
-  
   export interface PackageInfo {
     package_id: number;
     delivery_address: string;
@@ -21,10 +14,11 @@ export interface PackageData {
     order_comment?: string;
   }
   
-  export interface PackageUpdateData {
+  export interface PackageData {
     delivery_address?: string;
     delivery_zone?: string;
     delivery_status?: string;
+    client_id?:number
     driver_id?: number;
     pickup_time?: string;
     delivery_time?: string;

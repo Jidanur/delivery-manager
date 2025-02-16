@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { PackageData, PackageInfo, PackageUpdateData } from "../types/packageInterfaces";
+import { PackageInfo, PackageData } from "../types/packageInterfaces";
 import { handleApiError } from "../utils/errorHandler";
 import apiClient from "./apiClient";
 
@@ -13,7 +13,7 @@ export const packageService = {
     }
   },
 
-  async updatePackage(packageId: number, updateData: PackageUpdateData): Promise<PackageInfo> {
+  async updatePackage(packageId: number, updateData: PackageData): Promise<PackageInfo> {
     try {
       const response = await apiClient.put(`/package/update`, { packageId, updateInfo: updateData });
       return response.data;

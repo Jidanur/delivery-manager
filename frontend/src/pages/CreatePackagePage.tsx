@@ -5,18 +5,26 @@ import {
   Paper,
   TextField,
   Typography,
+  MenuItem,
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { packageService } from "../services/packageService";
-import { PackageData } from "../types/packageInterfaces";
+import {
+  PackageData,
+  ServiceType,
+  DeliveryStatus,
+  DeliveryZone,
+} from "../types/packageInterfaces";
 
 const CreatePackagePage = () => {
   const [packageData, setPackageData] = useState<PackageData>({
     delivery_address: "",
-    delivery_zone: "",
-    service_type: "",
-    client_id: undefined,
+    delivery_zone: DeliveryZone.ZONE_1,
+    delivery_status: DeliveryStatus.PENDING,
+    order_instructions: "",
+    order_comment: "",
+    service_type: ServiceType.STANDARD,
   });
   const navigate = useNavigate();
 
@@ -30,7 +38,7 @@ const CreatePackagePage = () => {
     try {
       const newOrder = await packageService.createPackage(packageData);
       console.log("Order created:", newOrder);
-      navigate("/manager"); // Redirect to the manager page after creating the order
+      navigate("/manager");
     } catch (error) {
       console.error("Error creating order:", error);
     }
@@ -55,22 +63,81 @@ const CreatePackagePage = () => {
             required
           />
           <TextField
+            select
             label="Delivery Zone"
             name="delivery_zone"
-            value={packageData.delivery_zone}
+            value={packageData.delivery_zone || ""}
             onChange={handleChange}
-          />
+            required
+          >
+            {Object.values(DeliveryZone).map((zone) => (
+              <MenuItem key={zone} value={zone}>
+                {zone}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
-            label="Service Type"
-            name="service_type"
-            value={packageData.service_type}
+            select
+            label="Delivery Status"
+            name="delivery_status"
+            value={packageData.delivery_status || ""}
             onChange={handleChange}
-          />
+            required
+          >
+            {Object.values(DeliveryStatus).map((status) => (
+              <MenuItem key={status} value={status}>
+                {status}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
             label="Client ID"
             name="client_id"
             type="number"
             value={packageData.client_id || ""}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Driver ID"
+            name="driver_id"
+            type="number"
+            value={packageData.driver_id || ""}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Pickup Time"
+            name="pickup_time"
+            type="datetime-local"
+            value={packageData.pickup_time || ""}
+            onChange={handleChange}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            label="Delivery Time"
+            name="delivery_time"
+            type="datetime-local"
+            value={packageData.delivery_time || ""}
+            onChange={handleChange}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            select
+            label="Service Type"
+            name="service_type"
+            value={packageData.service_type || ""}
+            onChange={handleChange}
+            required
+          >
+            {Object.values(ServiceType).map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            label="Order Instructions"
+            name="order_instructions"
+            value={packageData.order_instructions || ""}
             onChange={handleChange}
           />
           <Button type="submit" variant="contained" color="primary">

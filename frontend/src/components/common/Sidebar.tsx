@@ -7,11 +7,10 @@ import {
   ListItemButton,
   ListItemText,
   Box,
-  Button,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { ReactNode } from "react";
-import AltLogo from "./logo/AltLogo"; // Import AltLogo component
+import AltLogo from "./logo/AltLogo";
+import SubmitButton from "./button/SubmitButton";
 
 interface SidebarProps {
   sections: string[];
@@ -75,15 +74,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Box>
         <Box sx={{ marginTop: "auto", padding: 2 }}>
           {children}
-          <Button
-            fullWidth
-            variant="contained"
-            color="secondary"
-            component={Link}
-            to={logoutPath}
-          >
+          <SubmitButton fullWidth color="secondary" to={logoutPath}>
             Logout
-          </Button>
+          </SubmitButton>
         </Box>
       </Drawer>
     </Box>

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Paper,
   TextField,
@@ -10,14 +9,15 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { packageService } from "../services/packageService";
-import { userService } from "../services/userService";
+import { packageService } from "../../services/packageService";
+import { userService } from "../../services/userService";
 import {
   PackageData,
   ServiceType,
   DeliveryStatus,
   DeliveryZone,
-} from "../types/packageInterfaces";
+} from "../../types/packageInterfaces";
+import SubmitButton from "../../components/common/button/SubmitButton";
 
 const CreatePackagePage = () => {
   const [packageData, setPackageData] = useState<PackageData>({
@@ -218,9 +218,7 @@ const CreatePackagePage = () => {
             value={packageData.order_comment || ""}
             onChange={handleChange}
           />
-          <Button type="submit" variant="contained" color="primary">
-            Create Order
-          </Button>
+          <SubmitButton type="submit">Create Order</SubmitButton>
         </Box>
       </Paper>
     </Container>

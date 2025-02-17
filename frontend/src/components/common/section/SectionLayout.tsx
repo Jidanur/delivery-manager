@@ -1,6 +1,6 @@
-import { Box, Container, Typography, Paper, Fab, Tooltip } from "@mui/material";
+import { Box, Container, Typography, Paper } from "@mui/material";
 import { ReactNode } from "react";
-import AddIcon from "@mui/icons-material/Add";
+import FabAddButton from "../button/FabAddButton";
 
 interface SectionLayoutProps {
   heading: string;
@@ -29,21 +29,10 @@ const SectionLayout: React.FC<SectionLayoutProps> = ({
         <Paper sx={{ padding: 3, position: "relative" }}>
           {children}
           {showCreateButton && (
-            <Tooltip title="Create Order" arrow>
-              <Fab
-                color="primary"
-                aria-label="add"
-                onClick={onCreateButtonClick}
-                sx={{
-                  position: "fixed",
-                  bottom: 24,
-                  right: 24,
-                  zIndex: 1000,
-                }}
-              >
-                <AddIcon />
-              </Fab>
-            </Tooltip>
+            <FabAddButton
+              title={`Create ${selectedSection}`}
+              onClick={onCreateButtonClick}
+            />
           )}
         </Paper>
       </Container>

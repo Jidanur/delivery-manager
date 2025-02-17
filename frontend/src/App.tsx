@@ -4,13 +4,16 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/authentication/ProtectedRoute";
 
 // Page imports
-import ClientPage from "./pages/ClientPage";
-import DriverPage from "./pages/DriverPage";
+import ClientPage from "./pages/dashboards/ClientPage";
+import DriverPage from "./pages/dashboards/DriverPage";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import ManagerPage from "./pages/ManagerPage";
-import SignupPage from "./pages/SignupPage";
-import CreatePackagePage from "./pages/CreatePackagePage";
+import LoginPage from "./pages/authentication/LoginPage";
+import ManagerPage from "./pages/dashboards/ManagerPage";
+import SignupPage from "./pages/authentication/SignupPage";
+import CreatePackagePage from "./pages/createItems/CreatePackagePage";
+import ClientDetailPage from "./pages/dashboards/ClientPage";
+import DriverDetailPage from "./pages/itemDetails/DriverDetailsPage";
+import PackageDetailPage from "./pages/itemDetails/PackageDetails";
 
 // Component imports
 import Logout from "./components/authentication/Logout";
@@ -52,6 +55,30 @@ function App() {
           element={
             <ProtectedRoute roles={["client"]}>
               <ClientPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/client/:clientId"
+          element={
+            <ProtectedRoute roles={["manager", "client"]}>
+              <ClientDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/driver/:driverId"
+          element={
+            <ProtectedRoute roles={["manager", "driver"]}>
+              <DriverDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/package/:packageId"
+          element={
+            <ProtectedRoute roles={["manager", "driver", "client"]}>
+              <PackageDetailPage />
             </ProtectedRoute>
           }
         />

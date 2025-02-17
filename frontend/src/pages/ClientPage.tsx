@@ -4,8 +4,9 @@ import {
   Container,
   Paper,
   Typography,
-  Button,
   IconButton,
+  Fab,
+  Tooltip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,7 @@ import Sidebar from "../components/common/Sidebar";
 import GeneralTable from "../components/common/Table/GeneralTable";
 import { packageService } from "../services/packageService";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 
 const ClientPage = () => {
   const navigate = useNavigate();
@@ -82,40 +84,20 @@ const ClientPage = () => {
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-      <Box
-        sx={{
-          width: 240,
-          backgroundColor: "#f4f4f4",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          boxShadow: 1,
-        }}
-      >
-        <Sidebar
-          sections={sections}
-          selectedSection={selectedSection}
-          onNavigate={handleNavigation}
-          logoutPath="/logout"
-          heading="Client Dashboard"
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateOrder}
-            sx={{ margin: 2 }}
-          >
-            Create Order
-          </Button>
-        </Sidebar>
-      </Box>
+      <Sidebar
+        sections={sections}
+        selectedSection={selectedSection}
+        onNavigate={handleNavigation}
+        logoutPath="/logout"
+        heading="Client Dashboard"
+      />
       <Box sx={{ flexGrow: 1, padding: 3, backgroundColor: "#fafafa" }}>
         <Container maxWidth="lg">
           <Typography component="h1" variant="h4" gutterBottom>
             {selectedSection === "Profile" && "Manage Profile"}
             {selectedSection === "Orders" && "Manage Orders"}
           </Typography>
-          <Paper sx={{ padding: 3 }}>
+          <Paper sx={{ padding: 3, position: "relative" }}>
             {selectedSection === "Profile" && (
               <Typography variant="body1" align="center">
                 Here you can manage your profile.
@@ -143,6 +125,21 @@ const ClientPage = () => {
                     No orders available.
                   </Typography>
                 )}
+                <Tooltip title="Create Order" arrow>
+                  <Fab
+                    color="primary"
+                    aria-label="add"
+                    onClick={handleCreateOrder}
+                    sx={{
+                      position: "fixed",
+                      bottom: 24,
+                      right: 24,
+                      zIndex: 1000,
+                    }}
+                  >
+                    <AddIcon />
+                  </Fab>
+                </Tooltip>
               </>
             )}
           </Paper>

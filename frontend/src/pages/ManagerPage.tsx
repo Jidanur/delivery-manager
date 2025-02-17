@@ -4,8 +4,9 @@ import {
   Container,
   Paper,
   Typography,
-  Button,
   IconButton,
+  Fab,
+  Tooltip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ import GeneralTable from "../components/common/Table/GeneralTable";
 import { packageService } from "../services/packageService";
 import { userService } from "../services/userService";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 
 const ManagerPage = () => {
   const navigate = useNavigate();
@@ -112,33 +114,13 @@ const ManagerPage = () => {
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-      <Box
-        sx={{
-          width: 240,
-          backgroundColor: "#f4f4f4",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          boxShadow: 1,
-        }}
-      >
-        <Sidebar
-          sections={sections}
-          selectedSection={selectedSection}
-          onNavigate={handleNavigation}
-          logoutPath="/logout"
-          heading="Manager Dashboard"
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateOrder}
-            sx={{ margin: 2 }}
-          >
-            Create Order
-          </Button>
-        </Sidebar>
-      </Box>
+      <Sidebar
+        sections={sections}
+        selectedSection={selectedSection}
+        onNavigate={handleNavigation}
+        logoutPath="/logout"
+        heading="Manager Dashboard"
+      />
       <Box sx={{ flexGrow: 1, padding: 3, backgroundColor: "#fafafa" }}>
         <Container maxWidth="lg">
           <Typography component="h1" variant="h4" gutterBottom>
@@ -146,7 +128,7 @@ const ManagerPage = () => {
             {selectedSection === "Clients" && "Manage Clients"}
             {selectedSection === "Orders" && "Manage Orders"}
           </Typography>
-          <Paper sx={{ padding: 3 }}>
+          <Paper sx={{ padding: 3, position: "relative" }}>
             {loading ? (
               <CircularProgress />
             ) : data.length > 0 ? (
@@ -166,6 +148,23 @@ const ManagerPage = () => {
               <Typography variant="body1" align="center">
                 No data available.
               </Typography>
+            )}
+            {selectedSection === "Orders" && (
+              <Tooltip title="Create Order" arrow>
+                <Fab
+                  color="primary"
+                  aria-label="add"
+                  onClick={handleCreateOrder}
+                  sx={{
+                    position: "fixed",
+                    bottom: 24,
+                    right: 24,
+                    zIndex: 1000,
+                  }}
+                >
+                  <AddIcon />
+                </Fab>
+              </Tooltip>
             )}
           </Paper>
         </Container>

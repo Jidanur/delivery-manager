@@ -10,7 +10,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/authentication/LoginPage";
 import ManagerPage from "./pages/dashboards/ManagerPage";
 import SignupPage from "./pages/authentication/SignupPage";
-import CreatePackagePage from "./pages/CreatePackagePage";
+import CreatePackagePage from "./pages/createItems/CreatePackagePage";
 
 // Component imports
 import Logout from "./components/authentication/Logout";

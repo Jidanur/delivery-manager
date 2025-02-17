@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userService } from "../../services/userService"; // Adjust the import path accordingly
-import { UserData, UserInfo } from "../../types/userInterfaces"; // Assuming the types are in a 'types.ts' file
+import { userService } from "../../services/userService";
+import { UserData, UserInfo } from "../../types/userInterfaces";
 
 function Signup() {
   const [formData, setFormData] = useState<UserData>({
@@ -31,26 +31,6 @@ function Signup() {
   });
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
-
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | { name: string; value: unknown }>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => {
-  //     if (name === "role") {
-  //       return { ...prevData, role: value as string };
-  //     }
-
-  //     if (name.startsWith("info.")) {
-  //       const field = name.split(".")[1];
-  //       return {
-  //         ...prevData,
-  //         info: { ...prevData.info, [field]: value },
-  //       };
-  //     }
-  //     return { ...prevData, [name]: value };
-  //   });
-  // };
 
   const handleChange = (
     e:
@@ -105,7 +85,7 @@ function Signup() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

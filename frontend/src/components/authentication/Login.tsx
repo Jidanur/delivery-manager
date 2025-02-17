@@ -60,7 +60,7 @@ function Login() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -77,7 +77,7 @@ function Login() {
             required
             fullWidth
             id="username"
-            label="Email Address or username"
+            label="Email Address or Username"
             name="username"
             autoComplete="username"
             autoFocus
@@ -108,7 +108,7 @@ function Login() {
           >
             Sign In
           </Button>
-          <Grid2 container spacing={8}>
+          <Grid2 container>
             <Grid2>
               <Link href="#" variant="body2">
                 Forgot password?
@@ -116,7 +116,7 @@ function Login() {
             </Grid2>
             <Grid2>
               <Link href="/signup" variant="body2">
-                {"Sign Up"}
+                {"Don't have an account? Sign Up"}
               </Link>
             </Grid2>
           </Grid2>

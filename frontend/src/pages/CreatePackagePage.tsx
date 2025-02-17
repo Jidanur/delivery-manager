@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { packageService } from "../services/packageService";
 import { userService } from "../services/userService";
 import {
@@ -32,6 +32,10 @@ const CreatePackagePage = () => {
   const [drivers, setDrivers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/login";
+  const userRole = localStorage.getItem("role");
+  const userId = localStorage.getItem("user_id");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -40,6 +44,15 @@ const CreatePackagePage = () => {
         const allUsers = await userService.getAllUsers();
         setClients(allUsers.filter((user: any) => user.role === "client"));
         setDrivers(allUsers.filter((user: any) => user.role === "driver"));
+        if (userRole === "client") {
+          const client = allUsers.find(
+            (user: any) => user.user_id === parseInt(userId)
+          );
+          setPackageData((prevData) => ({
+            ...prevData,
+            client_id: client.client.client_id,
+          }));
+        }
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {
@@ -48,7 +61,7 @@ const CreatePackagePage = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [userRole, userId]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -65,7 +78,7 @@ const CreatePackagePage = () => {
     try {
       const newOrder = await packageService.createPackage(packageData);
       console.log("Order created:", newOrder);
-      navigate("/manager");
+      navigate(from); // Navigate back to the previous page
     } catch (error) {
       console.error("Error creating order:", error);
     }
@@ -121,42 +134,46 @@ const CreatePackagePage = () => {
             <CircularProgress />
           ) : (
             <>
-              <TextField
-                select
-                label="Client ID"
-                name="client_id"
-                value={packageData.client_id || ""}
-                onChange={handleChange}
-                fullWidth
-                margin="normal"
-              >
-                {clients.map((client) => (
-                  <MenuItem
-                    key={client.client.client_id}
-                    value={client.client.client_id}
+              {userRole === "manager" && (
+                <>
+                  <TextField
+                    select
+                    label="Client ID"
+                    name="client_id"
+                    value={packageData.client_id || ""}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
                   >
-                    {client.username}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                select
-                label="Driver ID"
-                name="driver_id"
-                value={packageData.driver_id || ""}
-                onChange={handleChange}
-                fullWidth
-                margin="normal"
-              >
-                {drivers.map((driver) => (
-                  <MenuItem
-                    key={driver.driver.driver_id}
-                    value={driver.driver.driver_id}
+                    {clients.map((client) => (
+                      <MenuItem
+                        key={client.client.client_id}
+                        value={client.client.client_id}
+                      >
+                        {client.username}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    select
+                    label="Driver ID"
+                    name="driver_id"
+                    value={packageData.driver_id || ""}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
                   >
-                    {driver.username}
-                  </MenuItem>
-                ))}
-              </TextField>
+                    {drivers.map((driver) => (
+                      <MenuItem
+                        key={driver.driver.driver_id}
+                        value={driver.driver.driver_id}
+                      >
+                        {driver.username}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </>
+              )}
             </>
           )}
           <TextField

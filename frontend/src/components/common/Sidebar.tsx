@@ -17,6 +17,7 @@ interface SidebarProps {
   selectedSection: string;
   onNavigate: (section: string) => void;
   logoutPath: string;
+  heading: string;
   children?: ReactNode;
 }
 
@@ -25,6 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   selectedSection,
   onNavigate,
   logoutPath,
+  heading,
   children,
 }) => {
   return (
@@ -36,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Manager Dashboard
+            {heading} Dashboard
           </Typography>
         </Toolbar>
       </AppBar>

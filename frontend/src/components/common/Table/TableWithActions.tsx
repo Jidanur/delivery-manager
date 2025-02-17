@@ -1,4 +1,15 @@
-import { CircularProgress, Typography, IconButton } from "@mui/material";
+import { useState } from "react";
+import {
+  CircularProgress,
+  Typography,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 import GeneralTable from "./GeneralTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -15,26 +26,71 @@ const TableWithActions: React.FC<TableWithActionsProps> = ({
   loading,
   onDelete,
 }) => {
+  const [open, setOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+
+  const handleClickOpen = (id: number) => {
+    setSelectedId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedId(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedId !== null) {
+      onDelete(selectedId);
+    }
+    handleClose();
+  };
+
   return (
     <>
       {loading ? (
         <CircularProgress />
       ) : data.length > 0 ? (
-        <GeneralTable
-          columns={columns}
-          data={data}
-          actions={(row) => (
-            <IconButton
-              color="error"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete(row.package_id);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          )}
-        />
+        <>
+          <GeneralTable
+            columns={columns}
+            data={data}
+            actions={(row) => (
+              <IconButton
+                color="error"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClickOpen(row.package_id);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
+          />
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Confirm Deletion"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure you want to delete this item?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={handleConfirmDelete} color="error" autoFocus>
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
       ) : (
         <Typography variant="body1" align="center">
           No data available.

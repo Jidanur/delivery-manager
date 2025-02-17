@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
-import GeneralTable from "../components/common/Table/GeneralTable";
+import GeneralTable from "../components/common/table/GeneralTable";
 import { packageService } from "../services/packageService";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";

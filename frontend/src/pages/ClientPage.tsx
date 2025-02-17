@@ -97,6 +97,9 @@ const ClientPage = () => {
             {selectedSection === "Profile" && "Manage Profile"}
             {selectedSection === "Orders" && "Manage Orders"}
           </Typography>
+          <Typography component="h2" variant="h5" gutterBottom>
+            {selectedSection}
+          </Typography>
           <Paper sx={{ padding: 3, position: "relative" }}>
             {selectedSection === "Profile" && (
               <Typography variant="body1" align="center">

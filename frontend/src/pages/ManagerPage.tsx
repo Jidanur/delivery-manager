@@ -128,6 +128,9 @@ const ManagerPage = () => {
             {selectedSection === "Clients" && "Manage Clients"}
             {selectedSection === "Orders" && "Manage Orders"}
           </Typography>
+          <Typography component="h2" variant="h5" gutterBottom>
+            {selectedSection}
+          </Typography>
           <Paper sx={{ padding: 3, position: "relative" }}>
             {loading ? (
               <CircularProgress />

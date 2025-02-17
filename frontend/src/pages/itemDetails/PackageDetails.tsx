@@ -1,4 +1,4 @@
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, Paper } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { packageService } from "../../services/packageService";
@@ -26,21 +26,26 @@ const PackageDetailPage = () => {
   }
 
   return (
-    <Container>
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h4">Package Details</Typography>
-        <Typography variant="body1">Order ID: {order.package_id}</Typography>
-        <Typography variant="body1">
-          Delivery Address: {order.delivery_address}
-        </Typography>
-        <Typography variant="body1">
-          Delivery Zone: {order.delivery_zone}
-        </Typography>
-        <Typography variant="body1">
-          Delivery Status: {order.delivery_status}
-        </Typography>
-        {/* Add more order details as needed */}
-      </Box>
+    <Container sx={{ padding: 3 }}>
+      <Paper elevation={3} sx={{ padding: 3 }}>
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h4" gutterBottom>
+            Package Details
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            <strong>Order ID:</strong> {order.package_id}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            <strong>Delivery Address:</strong> {order.delivery_address}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            <strong>Delivery Zone:</strong> {order.delivery_zone}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            <strong>Delivery Status:</strong> {order.delivery_status}
+          </Typography>
+        </Box>
+      </Paper>
     </Container>
   );
 };

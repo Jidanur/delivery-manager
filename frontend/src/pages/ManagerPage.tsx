@@ -114,6 +114,7 @@ const ManagerPage = () => {
           selectedSection={selectedSection}
           onNavigate={handleNavigation}
           logoutPath="/logout"
+          heading="Manager"
         >
           <Button
             variant="contained"

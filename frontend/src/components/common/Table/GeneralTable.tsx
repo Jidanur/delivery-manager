@@ -7,6 +7,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface Column {
   id: string;
@@ -26,6 +27,18 @@ const GeneralTable: React.FC<GeneralTableProps> = ({
   data,
   actions,
 }) => {
+  const navigate = useNavigate();
+
+  const handleRowClick = (row: any) => {
+    if (row.client_id) {
+      navigate(`/client/${row.client_id}`);
+    } else if (row.driver_id) {
+      navigate(`/driver/${row.driver_id}`);
+    } else if (row.package_id) {
+      navigate(`/order/${row.package_id}`);
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -47,6 +60,7 @@ const GeneralTable: React.FC<GeneralTableProps> = ({
           {data.map((row) => (
             <TableRow
               key={row.id}
+              onClick={() => handleRowClick(row)}
               sx={{
                 "&:hover": {
                   backgroundColor: "rgba(0, 0, 0, 0.04)",

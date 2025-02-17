@@ -11,6 +11,7 @@ import LoginPage from "./pages/authentication/LoginPage";
 import ManagerPage from "./pages/dashboards/ManagerPage";
 import SignupPage from "./pages/authentication/SignupPage";
 import CreatePackagePage from "./pages/createItems/CreatePackagePage";
+import ClientDetailPage from "./pages/dashboards/ClientPage";
 
 // Component imports
 import Logout from "./components/authentication/Logout";
@@ -52,6 +53,30 @@ function App() {
           element={
             <ProtectedRoute roles={["client"]}>
               <ClientPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/client/:clientId"
+          element={
+            <ProtectedRoute roles={["manager", "client"]}>
+              <ClientDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/driver/:driverId"
+          element={
+            <ProtectedRoute roles={["manager", "driver"]}>
+              <ClientDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/package/:packageId"
+          element={
+            <ProtectedRoute roles={["manager", "driver", "client"]}>
+              <ClientDetailPage />
             </ProtectedRoute>
           }
         />

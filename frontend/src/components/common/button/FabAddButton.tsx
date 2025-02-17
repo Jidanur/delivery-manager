@@ -3,10 +3,13 @@ import AddIcon from "@mui/icons-material/Add";
 
 interface FabAddButtonProps {
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
-const FabAddButton: React.FC<FabAddButtonProps> = ({ title, onClick }) => {
+const FabAddButton: React.FC<FabAddButtonProps> = ({
+  title,
+  onClick = () => {},
+}) => {
   return (
     <Tooltip title={title} arrow>
       <Fab

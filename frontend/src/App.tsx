@@ -4,12 +4,12 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/authentication/ProtectedRoute";
 
 // Page imports
-import ClientPage from "./pages/ClientPage";
-import DriverPage from "./pages/DriverPage";
+import ClientPage from "./pages/dashboards/ClientPage";
+import DriverPage from "./pages/dashboards/DriverPage";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import ManagerPage from "./pages/ManagerPage";
-import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/authentication/LoginPage";
+import ManagerPage from "./pages/dashboards/ManagerPage";
+import SignupPage from "./pages/authentication/SignupPage";
 import CreatePackagePage from "./pages/CreatePackagePage";
 
 // Component imports

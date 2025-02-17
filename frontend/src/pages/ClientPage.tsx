@@ -1,14 +1,15 @@
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
 
 const ClientPage = () => {
   const navigate = useNavigate();
+  const [selectedSection, setSelectedSection] = useState("Profile");
   const sections = ["Profile", "Orders"];
 
   const handleNavigation = (section: string) => {
-    // Handle navigation logic here
-    console.log(`Navigating to ${section}`);
+    setSelectedSection(section);
   };
 
   return (
@@ -25,22 +26,29 @@ const ClientPage = () => {
       >
         <Sidebar
           sections={sections}
-          selectedSection="Profile"
+          selectedSection={selectedSection}
           onNavigate={handleNavigation}
           logoutPath="/logout"
-          heading="Client"
+          heading="Client Dashboard"
         />
       </Box>
       <Box sx={{ flexGrow: 1, padding: 3, backgroundColor: "#fafafa" }}>
         <Container maxWidth="lg">
           <Typography component="h1" variant="h4" gutterBottom>
-            Client Dashboard
+            {selectedSection === "Profile" && "Manage Profile"}
+            {selectedSection === "Orders" && "Manage Orders"}
           </Typography>
           <Paper sx={{ padding: 3 }}>
-            <Typography variant="body1" align="center">
-              Welcome to the Client Dashboard. Here you can manage your profile
-              and view your orders.
-            </Typography>
+            {selectedSection === "Profile" && (
+              <Typography variant="body1" align="center">
+                Here you can manage your profile.
+              </Typography>
+            )}
+            {selectedSection === "Orders" && (
+              <Typography variant="body1" align="center">
+                Here you can view and manage your orders.
+              </Typography>
+            )}
           </Paper>
         </Container>
       </Box>

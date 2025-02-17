@@ -1,6 +1,4 @@
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
-  Avatar,
   Box,
   Button,
   Checkbox,
@@ -68,12 +66,6 @@ function Login() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
         {error && (
           <Typography color="error" variant="body2">
             {error}

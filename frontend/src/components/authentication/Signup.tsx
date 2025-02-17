@@ -1,6 +1,4 @@
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
-  Avatar,
   Box,
   Button,
   Container,
@@ -42,7 +40,7 @@ function Signup() {
   //     if (name === "role") {
   //       return { ...prevData, role: value as string };
   //     }
-      
+
   //     if (name.startsWith("info.")) {
   //       const field = name.split(".")[1];
   //       return {
@@ -54,17 +52,18 @@ function Signup() {
   //   });
   // };
 
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent
   ) => {
-    const {name, value} = e.target ;
+    const { name, value } = e.target;
 
     setFormData((prevData) => {
       if (name === "role") {
         return { ...prevData, role: value as string };
       }
-      
+
       if (name.startsWith("info.")) {
         const field = name.split(".")[1];
         return {
@@ -95,7 +94,7 @@ function Signup() {
     try {
       const userInfo: UserInfo = await userService.createUser(formData);
       console.log("Signup successful", userInfo);
-      navigate("/login");  // Redirect to login after successful signup
+      navigate("/login"); // Redirect to login after successful signup
     } catch (error) {
       console.error("Error during signup:", error);
       setError("Signup failed. Please try again.");
@@ -112,12 +111,6 @@ function Signup() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
         {error && (
           <Typography color="error" variant="body2">
             {error}
@@ -192,7 +185,12 @@ function Signup() {
           {/* Role Selection Dropdown */}
           <FormControl fullWidth margin="normal" required error={!!error}>
             <InputLabel>Role</InputLabel>
-            <Select name="role" value={formData.role} onChange={handleChange} label="Role">
+            <Select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              label="Role"
+            >
               <MenuItem value="manager">Manager</MenuItem>
               <MenuItem value="client">Client</MenuItem>
               <MenuItem value="driver">Driver</MenuItem>

@@ -1,15 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
 import SectionLayout from "../components/common/section/SectionLayout";
-import TableWithActions from "../components/common/table/TableWithActions";
+import GeneralTable from "../components/common/table/GeneralTable";
 import { packageService } from "../services/packageService";
+import { PackageInfo } from "../types/packageInterfaces";
 
 const DriverPage = () => {
-  const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = useState("My Orders");
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<PackageInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const sections = ["My Orders", "Available Orders"];
 
@@ -21,11 +20,14 @@ const DriverPage = () => {
         if (selectedSection === "My Orders") {
           response = await packageService.getMyPackages();
         } else if (selectedSection === "Available Orders") {
-          //response = await packageService.getAvailableDeliveries();
+          response = await packageService.getAllPackages();
+          response = response.filter(
+            (pkg: PackageInfo) => pkg.driver_id === null
+          );
         }
 
-        if (response && Array.isArray(response.data)) {
-          const formattedDeliveries = response.data.map((pkg: any) => ({
+        if (response && Array.isArray(response)) {
+          const formattedDeliveries = response.map((pkg: PackageInfo) => ({
             package_id: pkg.package_id,
             delivery_address: pkg.delivery_address,
             delivery_zone: pkg.delivery_zone || "N/A",
@@ -49,17 +51,6 @@ const DriverPage = () => {
 
   const handleNavigation = (section: string) => {
     setSelectedSection(section);
-  };
-
-  const handleDeleteDelivery = async (packageId: number) => {
-    try {
-      await packageService.deleteDelivery(packageId);
-      setData((prevData) =>
-        prevData.filter((pkg) => pkg.package_id !== packageId)
-      );
-    } catch (error) {
-      console.error("Error deleting delivery:", error);
-    }
   };
 
   const columns = [
@@ -88,12 +79,7 @@ const DriverPage = () => {
         }
         selectedSection={selectedSection}
       >
-        <TableWithActions
-          columns={columns}
-          data={data}
-          loading={loading}
-          onDelete={handleDeleteDelivery}
-        />
+        <GeneralTable columns={columns} data={data} loading={loading} />
       </SectionLayout>
     </Box>
   );

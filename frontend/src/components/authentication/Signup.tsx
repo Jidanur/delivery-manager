@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   FormControl,
   FormHelperText,
@@ -16,6 +15,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userService } from "../../services/userService";
 import { UserData, UserInfo } from "../../types/userInterfaces";
+import SubmitButton from "../common/button/SubmitButton";
 
 function Signup() {
   const [formData, setFormData] = useState<UserData>({
@@ -237,25 +237,7 @@ function Signup() {
             {error && <FormHelperText>{error}</FormHelperText>}
           </FormControl>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              backgroundColor: "#A2D2FF",
-              color: "#3A4856",
-              borderRadius: "50px",
-              transition: "all 0.3s ease-in-out",
-              "&:hover": {
-                backgroundColor: "#89C2FF",
-                transform: "scale(1.03)",
-              },
-            }}
-          >
-            Sign Up
-          </Button>
+          <SubmitButton type="submit">Sign Up</SubmitButton>
           <Link href="/login" variant="body2" sx={{ color: "#3A4856" }}>
             Already have an account? Sign In
           </Link>

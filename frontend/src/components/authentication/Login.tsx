@@ -1,10 +1,8 @@
 import {
   Box,
-  Button,
   Checkbox,
-  Container,
   FormControlLabel,
-  Grid,
+  Grid2,
   Link,
   TextField,
   Typography,
@@ -12,6 +10,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
+import SubmitButton from "../common/button/SubmitButton";
 
 function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -110,37 +109,19 @@ function Login() {
           label="Remember me"
           sx={{ color: "#3A4856" }}
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{
-            mt: 3,
-            mb: 2,
-            backgroundColor: "#A2D2FF", // Primary color
-            color: "#3A4856", // High contrast text
-            borderRadius: "50px",
-            transition: "all 0.3s ease-in-out",
-            "&:hover": {
-              backgroundColor: "#89C2FF", // Slightly darker blue
-              transform: "scale(1.03)",
-            },
-          }}
-        >
-          Sign In
-        </Button>
-        <Grid container justifyContent="space-between">
-          <Grid item>
+        <SubmitButton type="submit">Sign In</SubmitButton>
+        <Grid2 container justifyContent="space-between">
+          <Grid2>
             <Link href="#" variant="body2" sx={{ color: "#3A4856" }}>
               Forgot password?
             </Link>
-          </Grid>
-          <Grid item>
+          </Grid2>
+          <Grid2>
             <Link href="/signup" variant="body2" sx={{ color: "#3A4856" }}>
               {"Don't have an account? Sign Up"}
             </Link>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </Box>
     </Box>
   );

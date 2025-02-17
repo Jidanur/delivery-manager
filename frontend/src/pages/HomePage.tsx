@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Container, Typography, Button, Paper, Box } from "@mui/material";
+import { Container, Typography, Paper, Box } from "@mui/material";
 import AltLogo from "../components/common/logo/AltLogo";
+import SubmitButton from "../components/common/button/SubmitButton";
 
 // TODO: Create a global theme for consistency
 const HomePage = () => {
@@ -47,27 +48,9 @@ const HomePage = () => {
           <Typography variant="h6" sx={{ mt: 1, opacity: 0.85 }}>
             Manage your deliveries efficiently and effectively.
           </Typography>
-          <Button
-            variant="contained"
-            component={Link}
-            to="/login"
-            sx={{
-              mt: 3,
-              px: 4,
-              py: 1.5,
-              fontSize: "1rem",
-              borderRadius: "50px",
-              transition: "all 0.3s ease-in-out",
-              backgroundColor: "#A2D2FF", // Primary color
-              color: "#3A4856", // Dark blue-gray text for contrast
-              "&:hover": {
-                backgroundColor: "#89C2FF", // Slightly darker blue on hover
-                transform: "scale(1.05)",
-              },
-            }}
-          >
+          <SubmitButton component={Link} to="/login">
             Go to Login
-          </Button>
+          </SubmitButton>
         </Paper>
       </Container>
     </Box>

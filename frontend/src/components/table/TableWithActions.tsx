@@ -1,17 +1,8 @@
 import { useState } from "react";
-import {
-  CircularProgress,
-  Typography,
-  IconButton,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
-} from "@mui/material";
+import { CircularProgress, Typography, IconButton } from "@mui/material";
 import GeneralTable from "./GeneralTable";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmationDialog from "../popup/ConfirmationPopup";
 
 interface TableWithActionsProps {
   columns: any[];
@@ -67,29 +58,13 @@ const TableWithActions: React.FC<TableWithActionsProps> = ({
               </IconButton>
             )}
           />
-          <Dialog
+          <ConfirmationDialog
             open={open}
+            title="Confirm Deletion"
+            description="Are you sure you want to delete this item?"
             onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Confirm Deletion"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are you sure you want to delete this item?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={handleConfirmDelete} color="error" autoFocus>
-                Delete
-              </Button>
-            </DialogActions>
-          </Dialog>
+            onConfirm={handleConfirmDelete}
+          />
         </>
       ) : (
         <Typography variant="body1" align="center">

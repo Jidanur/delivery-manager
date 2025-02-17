@@ -39,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            {heading} Dashboard
+            {heading}
           </Typography>
         </Toolbar>
       </AppBar>

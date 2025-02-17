@@ -12,6 +12,8 @@ import ManagerPage from "./pages/dashboards/ManagerPage";
 import SignupPage from "./pages/authentication/SignupPage";
 import CreatePackagePage from "./pages/createItems/CreatePackagePage";
 import ClientDetailPage from "./pages/dashboards/ClientPage";
+import DriverDetailPage from "./pages/itemDetails/DriverDetailsPage";
+import PackageDetailPage from "./pages/itemDetails/PackageDetails";
 
 // Component imports
 import Logout from "./components/authentication/Logout";
@@ -68,7 +70,7 @@ function App() {
           path="/driver/:driverId"
           element={
             <ProtectedRoute roles={["manager", "driver"]}>
-              <ClientDetailPage />
+              <DriverDetailPage />
             </ProtectedRoute>
           }
         />
@@ -76,7 +78,7 @@ function App() {
           path="/package/:packageId"
           element={
             <ProtectedRoute roles={["manager", "driver", "client"]}>
-              <ClientDetailPage />
+              <PackageDetailPage />
             </ProtectedRoute>
           }
         />

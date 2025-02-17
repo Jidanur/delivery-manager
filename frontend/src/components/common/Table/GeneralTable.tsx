@@ -35,7 +35,7 @@ const GeneralTable: React.FC<GeneralTableProps> = ({
     } else if (row.driver_id) {
       navigate(`/driver/${row.driver_id}`);
     } else if (row.package_id) {
-      navigate(`/order/${row.package_id}`);
+      navigate(`/package/${row.package_id}`);
     }
   };
 

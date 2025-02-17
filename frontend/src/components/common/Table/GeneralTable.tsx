@@ -1,5 +1,4 @@
 import {
-  Button,
   Paper,
   Table,
   TableBody,
@@ -19,15 +18,13 @@ interface Column {
 interface GeneralTableProps {
   columns: Column[];
   data: any[];
-  onEdit?: (row: any) => void;
-  onDelete?: (id: any) => void;
+  actions?: (row: any) => JSX.Element;
 }
 
 const GeneralTable: React.FC<GeneralTableProps> = ({
   columns,
   data,
-  onEdit,
-  onDelete,
+  actions,
 }) => {
   return (
     <TableContainer component={Paper}>
@@ -43,7 +40,7 @@ const GeneralTable: React.FC<GeneralTableProps> = ({
                 {column.label}
               </TableCell>
             ))}
-            {(onEdit || onDelete) && <TableCell>Actions</TableCell>}
+            {actions && <TableCell>Actions</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -54,29 +51,7 @@ const GeneralTable: React.FC<GeneralTableProps> = ({
                   {row[column.id]}
                 </TableCell>
               ))}
-              {(onEdit || onDelete) && (
-                <TableCell>
-                  {onEdit && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => onEdit(row)}
-                    >
-                      Edit
-                    </Button>
-                  )}
-                  {onDelete && (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => onDelete(row.id)}
-                      sx={{ ml: 1 }}
-                    >
-                      Delete
-                    </Button>
-                  )}
-                </TableCell>
-              )}
+              {actions && <TableCell>{actions(row)}</TableCell>}
             </TableRow>
           ))}
         </TableBody>

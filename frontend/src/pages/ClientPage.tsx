@@ -5,12 +5,14 @@ import {
   Paper,
   Typography,
   Button,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
 import GeneralTable from "../components/common/Table/GeneralTable";
 import { packageService } from "../services/packageService";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ClientPage = () => {
   const navigate = useNavigate();
@@ -56,6 +58,17 @@ const ClientPage = () => {
 
   const handleCreateOrder = () => {
     navigate("/create-package", { state: { from: "/client" } });
+  };
+
+  const handleDeleteOrder = async (packageId: number) => {
+    try {
+      await packageService.deletePackage(packageId);
+      setData((prevData) =>
+        prevData.filter((pkg) => pkg.package_id !== packageId)
+      );
+    } catch (error) {
+      console.error("Error deleting package:", error);
+    }
   };
 
   const columns = [
@@ -113,7 +126,18 @@ const ClientPage = () => {
                 {loading ? (
                   <CircularProgress />
                 ) : data.length > 0 ? (
-                  <GeneralTable columns={columns} data={data} />
+                  <GeneralTable
+                    columns={columns}
+                    data={data}
+                    actions={(row) => (
+                      <IconButton
+                        color="error"
+                        onClick={() => handleDeleteOrder(row.package_id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
+                  />
                 ) : (
                   <Typography variant="body1" align="center">
                     No orders available.

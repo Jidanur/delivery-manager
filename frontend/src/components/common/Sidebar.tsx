@@ -34,7 +34,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* AppBar for the top section */}
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: "#A2D2FF",
+          color: "#3A4856",
+        }}
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">

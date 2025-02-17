@@ -12,7 +12,7 @@ const HomePage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #9EADBD, #3A4856)", // Subtle gradient
+        backgroundColor: "#fff",
         animation: "fadeIn 1s ease-in-out",
         "@keyframes fadeIn": {
           "0%": { opacity: 0, transform: "scale(0.95)" },
@@ -29,7 +29,7 @@ const HomePage = () => {
             flexDirection: "column",
             alignItems: "center",
             backdropFilter: "blur(8px)",
-            backgroundColor: "rgba(255, 255, 255, 0.15)", // Softer transparency
+            backgroundColor: "#9EADBD", //TODO: fix this color
             borderRadius: 3,
             textAlign: "center",
             color: "#fff", // White text for contrast

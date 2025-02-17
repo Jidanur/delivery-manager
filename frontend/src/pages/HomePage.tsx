@@ -29,7 +29,7 @@ const HomePage = () => {
             flexDirection: "column",
             alignItems: "center",
             backdropFilter: "blur(8px)",
-            backgroundColor: "#9EADBD", //TODO: fix this color
+            backgroundColor: "#A2D2FF", //TODO: fix this color
             borderRadius: 3,
             textAlign: "center",
             color: "#fff", // White text for contrast

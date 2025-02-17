@@ -50,8 +50,13 @@ const CreatePackagePage = () => {
     fetchUsers();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
+    console.log(`Changing ${name} to ${value}`);
     setPackageData((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -126,7 +131,10 @@ const CreatePackagePage = () => {
                 margin="normal"
               >
                 {clients.map((client) => (
-                  <MenuItem key={client.client_id} value={client.client_id}>
+                  <MenuItem
+                    key={client.client.client_id}
+                    value={client.client.client_id}
+                  >
                     {client.username}
                   </MenuItem>
                 ))}
@@ -141,7 +149,10 @@ const CreatePackagePage = () => {
                 margin="normal"
               >
                 {drivers.map((driver) => (
-                  <MenuItem key={driver.driver_id} value={driver.driver_id}>
+                  <MenuItem
+                    key={driver.driver.driver_id}
+                    value={driver.driver.driver_id}
+                  >
                     {driver.username}
                   </MenuItem>
                 ))}

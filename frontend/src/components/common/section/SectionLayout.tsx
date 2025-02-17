@@ -31,15 +31,19 @@ const SectionLayout: React.FC<SectionLayoutProps> = ({
           {showCreateButton && (
             <Tooltip title="Create Order" arrow>
               <Fab
-                color="primary"
-                aria-label="add"
-                onClick={onCreateButtonClick}
                 sx={{
+                  backgroundColor: "#A2D2FF", // Primary color
+                  color: "#3A4856", // High contrast text
+                  "&:hover": {
+                    backgroundColor: "#89C2FF", // Slightly lighter shade for hover
+                  },
                   position: "fixed",
                   bottom: 24,
                   right: 24,
                   zIndex: 1000,
                 }}
+                aria-label="add"
+                onClick={onCreateButtonClick}
               >
                 <AddIcon />
               </Fab>

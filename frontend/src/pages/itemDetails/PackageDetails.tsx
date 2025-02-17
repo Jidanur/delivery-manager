@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { packageService } from "../../services/packageService";
 
 const PackageDetailPage = () => {
-  const { orderId } = useParams<{ orderId: string }>();
+  const { packageId } = useParams<{ packageId: string }>();
   const [order, setOrder] = useState<any>(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await packageService.getPackage(Number(orderId));
+        const response = await packageService.getPackage(Number(packageId));
+        console.log("response", response);
         setOrder(response);
       } catch (error) {
         console.error("Error fetching order:", error);
@@ -18,7 +19,7 @@ const PackageDetailPage = () => {
     };
 
     fetchOrder();
-  }, [orderId]);
+  }, [packageId]);
 
   if (!order) {
     return <Typography>Loading...</Typography>;
@@ -27,8 +28,8 @@ const PackageDetailPage = () => {
   return (
     <Container>
       <Box sx={{ mt: 4 }}>
-        <Typography variant="h4">Order Details</Typography>
-        <Typography variant="body1">Package ID: {order.package_id}</Typography>
+        <Typography variant="h4">package Details</Typography>
+        <Typography variant="body1">Order ID: {order.package_id}</Typography>
         <Typography variant="body1">
           Delivery Address: {order.delivery_address}
         </Typography>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Container, Typography, Button, Paper, Box } from "@mui/material";
 import AltLogo from "../components/common/logo/AltLogo";
 
+// TODO: Create a global theme for consistency
 const HomePage = () => {
   return (
     <Box
@@ -10,7 +11,7 @@ const HomePage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(to right, #a8c0ff, #3f2b96)",
+        background: "linear-gradient(to right, #9EADBD, #3A4856)", // Subtle gradient
         animation: "fadeIn 1s ease-in-out",
         "@keyframes fadeIn": {
           "0%": { opacity: 0, transform: "scale(0.95)" },
@@ -27,10 +28,10 @@ const HomePage = () => {
             flexDirection: "column",
             alignItems: "center",
             backdropFilter: "blur(8px)",
-            backgroundColor: "rgba(255, 255, 255, 0.2)", // Slightly more visible
+            backgroundColor: "rgba(255, 255, 255, 0.15)", // Softer transparency
             borderRadius: 3,
             textAlign: "center",
-            color: "#fff",
+            color: "#fff", // White text for contrast
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
             animation: "slideUp 0.8s ease-in-out",
             "@keyframes slideUp": {
@@ -43,12 +44,11 @@ const HomePage = () => {
           <Typography component="h1" variant="h4" sx={{ fontWeight: "bold" }}>
             Welcome to Delivery Manager
           </Typography>
-          <Typography variant="h6" sx={{ mt: 1, opacity: 0.8 }}>
+          <Typography variant="h6" sx={{ mt: 1, opacity: 0.85 }}>
             Manage your deliveries efficiently and effectively.
           </Typography>
           <Button
             variant="contained"
-            color="primary"
             component={Link}
             to="/login"
             sx={{
@@ -58,9 +58,10 @@ const HomePage = () => {
               fontSize: "1rem",
               borderRadius: "50px",
               transition: "all 0.3s ease-in-out",
-              backgroundColor: "#3f72af",
+              backgroundColor: "#A2D2FF", // Primary color
+              color: "#3A4856", // Dark blue-gray text for contrast
               "&:hover": {
-                backgroundColor: "#2c5aa0",
+                backgroundColor: "#89C2FF", // Slightly darker blue on hover
                 transform: "scale(1.05)",
               },
             }}

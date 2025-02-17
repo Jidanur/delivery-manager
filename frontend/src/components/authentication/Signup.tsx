@@ -91,12 +91,23 @@ function Signup() {
           alignItems: "center",
         }}
       >
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{ color: "#3A4856", mb: 2 }}
+        >
+          Create an Account
+        </Typography>
         {error && (
-          <Typography color="error" variant="body2">
+          <Typography
+            color="error"
+            variant="body2"
+            sx={{ textAlign: "center", mb: 2 }}
+          >
             {error}
           </Typography>
         )}
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
             margin="normal"
             required
@@ -108,6 +119,13 @@ function Signup() {
             value={formData.username}
             onChange={handleChange}
             autoFocus
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -120,6 +138,13 @@ function Signup() {
             autoComplete="new-password"
             value={formData.password}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -130,6 +155,13 @@ function Signup() {
             id="name"
             value={formData.info.name}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -141,6 +173,13 @@ function Signup() {
             autoComplete="email"
             value={formData.info.email}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -151,6 +190,13 @@ function Signup() {
             id="phone"
             value={formData.info.phone}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -160,16 +206,29 @@ function Signup() {
             id="address"
             value={formData.info.address || ""}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
 
-          {/* Role Selection Dropdown */}
           <FormControl fullWidth margin="normal" required error={!!error}>
-            <InputLabel>Role</InputLabel>
+            <InputLabel sx={{ color: "#3A4856" }}>Role</InputLabel>
             <Select
               name="role"
               value={formData.role}
               onChange={handleChange}
-              label="Role"
+              sx={{
+                backgroundColor: "#F5F7FA",
+                borderRadius: 1,
+                "& .MuiSelect-select": { color: "#3A4856" },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#9EADBD",
+                },
+              }}
             >
               <MenuItem value="manager">Manager</MenuItem>
               <MenuItem value="client">Client</MenuItem>
@@ -182,11 +241,22 @@ function Signup() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              backgroundColor: "#A2D2FF",
+              color: "#3A4856",
+              borderRadius: "50px",
+              transition: "all 0.3s ease-in-out",
+              "&:hover": {
+                backgroundColor: "#89C2FF",
+                transform: "scale(1.03)",
+              },
+            }}
           >
             Sign Up
           </Button>
-          <Link href="/login" variant="body2">
+          <Link href="/login" variant="body2" sx={{ color: "#3A4856" }}>
             Already have an account? Sign In
           </Link>
         </Box>

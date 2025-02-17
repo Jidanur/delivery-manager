@@ -4,7 +4,7 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
-  Grid2,
+  Grid,
   Link,
   TextField,
   Typography,
@@ -27,7 +27,6 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    // Validate form data
     if (!formData.username || !formData.password) {
       setError("Please fill in all fields");
       return;
@@ -57,72 +56,93 @@ function Login() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 2,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {error && (
-          <Typography color="error" variant="body2">
-            {error}
-          </Typography>
-        )}
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Email Address or Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={formData.username}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
-          <Grid2 container>
-            <Grid2>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid2>
-            <Grid2>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid2>
-          </Grid2>
-        </Box>
+    <Box sx={{ width: "100%", mt: 2 }}>
+      {error && (
+        <Typography
+          color="error"
+          variant="body2"
+          sx={{ textAlign: "center", mb: 2 }}
+        >
+          {error}
+        </Typography>
+      )}
+      <Box component="form" onSubmit={handleSubmit} noValidate>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="Email Address or Username"
+          name="username"
+          autoComplete="username"
+          autoFocus
+          value={formData.username}
+          onChange={handleChange}
+          sx={{
+            backgroundColor: "#F5F7FA", // Light gray for readability
+            borderRadius: 1,
+            "& .MuiInputBase-input": { color: "#3A4856" }, // Dark blue-gray text
+            "& .MuiInputLabel-root": { color: "#3A4856" },
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" }, // Subtle contrast
+          }}
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          value={formData.password}
+          onChange={handleChange}
+          sx={{
+            backgroundColor: "#F5F7FA", // Light gray
+            borderRadius: 1,
+            "& .MuiInputBase-input": { color: "#3A4856" },
+            "& .MuiInputLabel-root": { color: "#3A4856" },
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+          }}
+        />
+        <FormControlLabel
+          control={<Checkbox sx={{ color: "#3A4856" }} />}
+          label="Remember me"
+          sx={{ color: "#3A4856" }}
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 3,
+            mb: 2,
+            backgroundColor: "#A2D2FF", // Primary color
+            color: "#3A4856", // High contrast text
+            borderRadius: "50px",
+            transition: "all 0.3s ease-in-out",
+            "&:hover": {
+              backgroundColor: "#89C2FF", // Slightly darker blue
+              transform: "scale(1.03)",
+            },
+          }}
+        >
+          Sign In
+        </Button>
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <Link href="#" variant="body2" sx={{ color: "#3A4856" }}>
+              Forgot password?
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link href="/signup" variant="body2" sx={{ color: "#3A4856" }}>
+              {"Don't have an account? Sign Up"}
+            </Link>
+          </Grid>
+        </Grid>
       </Box>
-    </Container>
+    </Box>
   );
 }
 

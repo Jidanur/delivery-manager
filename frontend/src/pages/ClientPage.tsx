@@ -4,6 +4,7 @@ import {
   Container,
   Paper,
   Typography,
+  Button,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -53,6 +54,10 @@ const ClientPage = () => {
     setSelectedSection(section);
   };
 
+  const handleCreateOrder = () => {
+    navigate("/create-package", { state: { from: "/client" } });
+  };
+
   const columns = [
     { id: "package_id", label: "Package ID" },
     { id: "delivery_address", label: "Delivery Address" },
@@ -80,7 +85,16 @@ const ClientPage = () => {
           onNavigate={handleNavigation}
           logoutPath="/logout"
           heading="Client Dashboard"
-        />
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCreateOrder}
+            sx={{ margin: 2 }}
+          >
+            Create Order
+          </Button>
+        </Sidebar>
       </Box>
       <Box sx={{ flexGrow: 1, padding: 3, backgroundColor: "#fafafa" }}>
         <Container maxWidth="lg">

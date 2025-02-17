@@ -71,7 +71,7 @@ const ManagerPage = () => {
   };
 
   const handleCreateOrder = () => {
-    navigate("/create-package");
+    navigate("/create-package", { state: { from: "/manager" } });
   };
 
   const sections = ["Drivers", "Clients", "Orders"];

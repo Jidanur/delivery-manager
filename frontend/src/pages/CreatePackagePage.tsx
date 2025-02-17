@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { packageService } from "../services/packageService";
 import { userService } from "../services/userService";
 import {
@@ -32,6 +32,8 @@ const CreatePackagePage = () => {
   const [drivers, setDrivers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/login";
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,7 +67,7 @@ const CreatePackagePage = () => {
     try {
       const newOrder = await packageService.createPackage(packageData);
       console.log("Order created:", newOrder);
-      navigate("/manager");
+      navigate(from); // Navigate back to the previous page
     } catch (error) {
       console.error("Error creating order:", error);
     }

@@ -1,4 +1,3 @@
-//HOC protected route to safeguard routing
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -10,16 +9,16 @@ interface DecodedToken {
 
 const ProtectedRoute = ({
   children,
-  role,
+  roles,
 }: {
   children: JSX.Element;
-  role: string;
+  roles: string[];
 }) => {
   const token = localStorage.getItem("token");
   const userRole = localStorage.getItem("role");
 
-  //redirect to login page if the user is not logged in
-  if (!token || userRole !== role) {
+  // Redirect to login page if the user is not logged in or role is not allowed
+  if (!token || !roles.includes(userRole || "")) {
     return <Navigate to="/login" />;
   }
 

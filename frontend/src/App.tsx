@@ -1,9 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-//HOC
+// HOC
 import ProtectedRoute from "./components/authentication/ProtectedRoute";
 
-//Page imports
+// Page imports
 import ClientPage from "./pages/ClientPage";
 import DriverPage from "./pages/DriverPage";
 import HomePage from "./pages/HomePage";
@@ -12,7 +12,7 @@ import ManagerPage from "./pages/ManagerPage";
 import SignupPage from "./pages/SignupPage";
 import CreatePackagePage from "./pages/CreatePackagePage";
 
-//Component imports
+// Component imports
 import Logout from "./components/authentication/Logout";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
         <Route
           path="/manager"
           element={
-            <ProtectedRoute role="manager">
+            <ProtectedRoute roles={["manager"]}>
               <ManagerPage />
             </ProtectedRoute>
           }
@@ -34,7 +34,7 @@ function App() {
         <Route
           path="/create-package"
           element={
-            <ProtectedRoute role="manager">
+            <ProtectedRoute roles={["manager", "client"]}>
               <CreatePackagePage />
             </ProtectedRoute>
           }
@@ -42,7 +42,7 @@ function App() {
         <Route
           path="/driver"
           element={
-            <ProtectedRoute role="driver">
+            <ProtectedRoute roles={["driver"]}>
               <DriverPage />
             </ProtectedRoute>
           }
@@ -50,7 +50,7 @@ function App() {
         <Route
           path="/client"
           element={
-            <ProtectedRoute role="client">
+            <ProtectedRoute roles={["client"]}>
               <ClientPage />
             </ProtectedRoute>
           }

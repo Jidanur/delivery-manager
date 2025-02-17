@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ReactNode } from "react";
+import AltLogo from "./logo/AltLogo"; // Import AltLogo component
 
 interface SidebarProps {
   sections: string[];
@@ -57,6 +58,9 @@ const Sidebar: React.FC<SidebarProps> = ({
       >
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
+          <Box sx={{ display: "flex", justifyContent: "center", padding: 2 }}>
+            <AltLogo width={150} />
+          </Box>
           <List>
             {sections.map((section) => (
               <ListItemButton

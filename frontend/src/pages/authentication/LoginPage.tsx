@@ -1,5 +1,5 @@
 import { Container, Box, Typography } from "@mui/material";
-import Login from "../components/authentication/Login";
+import Login from "../../components/authentication/Login";
 
 function LoginPage() {
   return (

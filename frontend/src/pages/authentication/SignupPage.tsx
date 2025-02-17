@@ -1,6 +1,6 @@
 import { Container, Box, Typography } from "@mui/material";
 
-import Signup from "../components/authentication/Signup";
+import Signup from "../../components/authentication/Signup";
 
 function SignupPage() {
   return (

@@ -10,14 +10,14 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { packageService } from "../services/packageService";
-import { userService } from "../services/userService";
+import { packageService } from "../../services/packageService";
+import { userService } from "../../services/userService";
 import {
   PackageData,
   ServiceType,
   DeliveryStatus,
   DeliveryZone,
-} from "../types/packageInterfaces";
+} from "../../types/packageInterfaces";
 
 const CreatePackagePage = () => {
   const [packageData, setPackageData] = useState<PackageData>({

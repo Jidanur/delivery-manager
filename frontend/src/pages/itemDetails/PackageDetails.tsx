@@ -12,7 +12,7 @@ const PackageDetailPage = () => {
       try {
         const response = await packageService.getPackage(Number(packageId));
         console.log("response", response);
-        setOrder(response);
+        setOrder(response.package);
       } catch (error) {
         console.error("Error fetching order:", error);
       }
@@ -28,7 +28,7 @@ const PackageDetailPage = () => {
   return (
     <Container>
       <Box sx={{ mt: 4 }}>
-        <Typography variant="h4">package Details</Typography>
+        <Typography variant="h4">Package Details</Typography>
         <Typography variant="body1">Order ID: {order.package_id}</Typography>
         <Typography variant="body1">
           Delivery Address: {order.delivery_address}

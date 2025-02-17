@@ -17,7 +17,7 @@ import {
   DeliveryStatus,
   DeliveryZone,
 } from "../../types/packageInterfaces";
-import SubmitButton from "../../components/common/button/SubmitButton";
+import StyledButton from "../../components/common/button/StyledButton";
 
 const CreatePackagePage = () => {
   const [packageData, setPackageData] = useState<PackageData>({
@@ -218,7 +218,7 @@ const CreatePackagePage = () => {
             value={packageData.order_comment || ""}
             onChange={handleChange}
           />
-          <SubmitButton type="submit">Create Order</SubmitButton>
+          <StyledButton type="submit">Create Order</StyledButton>
         </Box>
       </Paper>
     </Container>

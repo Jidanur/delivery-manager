@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { ReactNode } from "react";
 import AltLogo from "./logo/AltLogo";
-import SubmitButton from "./button/SubmitButton";
+import StyledButton from "./button/StyledButton";
 
 interface SidebarProps {
   sections: string[];
@@ -78,9 +78,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Box>
         <Box sx={{ marginTop: "auto", padding: 2 }}>
           {children}
-          <SubmitButton fullWidth color="secondary" to={logoutPath}>
+          <StyledButton fullWidth color="secondary" to={logoutPath}>
             Logout
-          </SubmitButton>
+          </StyledButton>
         </Box>
       </Drawer>
     </Box>

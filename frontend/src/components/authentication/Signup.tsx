@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userService } from "../../services/userService";
 import { UserData, UserInfo } from "../../types/userInterfaces";
-import SubmitButton from "../common/button/SubmitButton";
+import StyledButton from "../common/button/StyledButton";
 
 function Signup() {
   const [formData, setFormData] = useState<UserData>({
@@ -237,7 +237,7 @@ function Signup() {
             {error && <FormHelperText>{error}</FormHelperText>}
           </FormControl>
 
-          <SubmitButton type="submit">Sign Up</SubmitButton>
+          <StyledButton type="submit">Sign Up</StyledButton>
           <Link href="/login" variant="body2" sx={{ color: "#3A4856" }}>
             Already have an account? Sign In
           </Link>

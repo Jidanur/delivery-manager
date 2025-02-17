@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
-import SubmitButton from "../common/button/SubmitButton";
+import StyledButton from "../common/button/StyledButton";
 
 function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -109,7 +109,7 @@ function Login() {
           label="Remember me"
           sx={{ color: "#3A4856" }}
         />
-        <SubmitButton type="submit">Sign In</SubmitButton>
+        <StyledButton type="submit">Sign In</StyledButton>
         <Grid2 container justifyContent="space-between">
           <Grid2>
             <Link href="#" variant="body2" sx={{ color: "#3A4856" }}>

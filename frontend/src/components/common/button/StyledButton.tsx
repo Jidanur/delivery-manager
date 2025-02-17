@@ -1,11 +1,11 @@
 import { Button, ButtonProps } from "@mui/material";
 import { Link, LinkProps } from "react-router-dom";
 
-type SubmitButtonProps = ButtonProps & {
+type StyledButtonProps = ButtonProps & {
   to?: LinkProps["to"];
 };
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({
+const StyledButton: React.FC<StyledButtonProps> = ({
   children,
   to,
   ...props
@@ -35,4 +35,4 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
   );
 };
 
-export default SubmitButton;
+export default StyledButton;

@@ -45,7 +45,18 @@ const GeneralTable: React.FC<GeneralTableProps> = ({
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow
+              key={row.id}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.04)",
+                  transition:
+                    "background-color 0.3s ease, box-shadow 0.3s ease",
+                  boxShadow: 3,
+                  cursor: "pointer",
+                },
+              }}
+            >
               {columns.map((column) => (
                 <TableCell key={column.id} align={column.align}>
                   {row[column.id]}

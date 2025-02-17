@@ -1,21 +1,11 @@
-import {
-  Box,
-  CircularProgress,
-  Container,
-  Paper,
-  Typography,
-  IconButton,
-  Fab,
-  Tooltip,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
-import GeneralTable from "../components/common/table/GeneralTable";
+import SectionLayout from "../components/common/section/SectionLayout";
+import TableWithActions from "../components/common/table/TableWithActions";
 import { packageService } from "../services/packageService";
 import { userService } from "../services/userService";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
 
 const ManagerPage = () => {
   const navigate = useNavigate();
@@ -121,57 +111,25 @@ const ManagerPage = () => {
         logoutPath="/logout"
         heading="Manager Dashboard"
       />
-      <Box sx={{ flexGrow: 1, padding: 3, backgroundColor: "#fafafa" }}>
-        <Container maxWidth="lg">
-          <Typography component="h1" variant="h4" gutterBottom>
-            {selectedSection === "Drivers" && "Manage Drivers"}
-            {selectedSection === "Clients" && "Manage Clients"}
-            {selectedSection === "Orders" && "Manage Orders"}
-          </Typography>
-          <Typography component="h2" variant="h5" gutterBottom>
-            {selectedSection}
-          </Typography>
-          <Paper sx={{ padding: 3, position: "relative" }}>
-            {loading ? (
-              <CircularProgress />
-            ) : data.length > 0 ? (
-              <GeneralTable
-                columns={columns}
-                data={data}
-                actions={(row) => (
-                  <IconButton
-                    color="error"
-                    onClick={() => handleDeleteOrder(row.package_id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                )}
-              />
-            ) : (
-              <Typography variant="body1" align="center">
-                No data available.
-              </Typography>
-            )}
-            {selectedSection === "Orders" && (
-              <Tooltip title="Create Order" arrow>
-                <Fab
-                  color="primary"
-                  aria-label="add"
-                  onClick={handleCreateOrder}
-                  sx={{
-                    position: "fixed",
-                    bottom: 24,
-                    right: 24,
-                    zIndex: 1000,
-                  }}
-                >
-                  <AddIcon />
-                </Fab>
-              </Tooltip>
-            )}
-          </Paper>
-        </Container>
-      </Box>
+      <SectionLayout
+        heading={
+          selectedSection === "Drivers"
+            ? "Manage Drivers"
+            : selectedSection === "Clients"
+            ? "Manage Clients"
+            : "Manage Orders"
+        }
+        selectedSection={selectedSection}
+        showCreateButton={selectedSection === "Orders"}
+        onCreateButtonClick={handleCreateOrder}
+      >
+        <TableWithActions
+          columns={columns}
+          data={data}
+          loading={loading}
+          onDelete={handleDeleteOrder}
+        />
+      </SectionLayout>
     </Box>
   );
 };

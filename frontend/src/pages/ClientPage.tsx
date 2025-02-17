@@ -1,20 +1,10 @@
-import {
-  Box,
-  CircularProgress,
-  Container,
-  Paper,
-  Typography,
-  IconButton,
-  Fab,
-  Tooltip,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
-import GeneralTable from "../components/common/table/GeneralTable";
+import SectionLayout from "../components/common/section/SectionLayout";
+import TableWithActions from "../components/common/table/TableWithActions";
 import { packageService } from "../services/packageService";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
 
 const ClientPage = () => {
   const navigate = useNavigate();
@@ -29,7 +19,6 @@ const ClientPage = () => {
         setLoading(true);
         try {
           const response = await packageService.getMyPackages();
-          console.log("API response:", response); // Log the entire response object
           if (Array.isArray(response.data)) {
             const formattedPackages = response.data.map((pkg: any) => ({
               package_id: pkg.package_id,
@@ -91,63 +80,27 @@ const ClientPage = () => {
         logoutPath="/logout"
         heading="Client Dashboard"
       />
-      <Box sx={{ flexGrow: 1, padding: 3, backgroundColor: "#fafafa" }}>
-        <Container maxWidth="lg">
-          <Typography component="h1" variant="h4" gutterBottom>
-            {selectedSection === "Profile" && "Manage Profile"}
-            {selectedSection === "Orders" && "Manage Orders"}
+      <SectionLayout
+        heading={
+          selectedSection === "Profile" ? "Manage Profile" : "Manage Orders"
+        }
+        selectedSection={selectedSection}
+        showCreateButton={selectedSection === "Orders"}
+        onCreateButtonClick={handleCreateOrder}
+      >
+        {selectedSection === "Profile" ? (
+          <Typography variant="body1" align="center">
+            Here you can manage your profile.
           </Typography>
-          <Typography component="h2" variant="h5" gutterBottom>
-            {selectedSection}
-          </Typography>
-          <Paper sx={{ padding: 3, position: "relative" }}>
-            {selectedSection === "Profile" && (
-              <Typography variant="body1" align="center">
-                Here you can manage your profile.
-              </Typography>
-            )}
-            {selectedSection === "Orders" && (
-              <>
-                {loading ? (
-                  <CircularProgress />
-                ) : data.length > 0 ? (
-                  <GeneralTable
-                    columns={columns}
-                    data={data}
-                    actions={(row) => (
-                      <IconButton
-                        color="error"
-                        onClick={() => handleDeleteOrder(row.package_id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    )}
-                  />
-                ) : (
-                  <Typography variant="body1" align="center">
-                    No orders available.
-                  </Typography>
-                )}
-                <Tooltip title="Create Order" arrow>
-                  <Fab
-                    color="primary"
-                    aria-label="add"
-                    onClick={handleCreateOrder}
-                    sx={{
-                      position: "fixed",
-                      bottom: 24,
-                      right: 24,
-                      zIndex: 1000,
-                    }}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
-              </>
-            )}
-          </Paper>
-        </Container>
-      </Box>
+        ) : (
+          <TableWithActions
+            columns={columns}
+            data={data}
+            loading={loading}
+            onDelete={handleDeleteOrder}
+          />
+        )}
+      </SectionLayout>
     </Box>
   );
 };

@@ -12,7 +12,7 @@ const HomePage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#fff",
+        backgroundColor: "#A2D2FF",
         animation: "fadeIn 1s ease-in-out",
         "@keyframes fadeIn": {
           "0%": { opacity: 0, transform: "scale(0.95)" },
@@ -29,10 +29,10 @@ const HomePage = () => {
             flexDirection: "column",
             alignItems: "center",
             backdropFilter: "blur(8px)",
-            backgroundColor: "#A2D2FF", //TODO: fix this color
+            backgroundColor: "rgba(255, 255, 255, 0.9)", // White with slight transparency
             borderRadius: 3,
             textAlign: "center",
-            color: "#fff", // White text for contrast
+            color: "#3A4856", // Dark text for contrast
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
             animation: "slideUp 0.8s ease-in-out",
             "@keyframes slideUp": {

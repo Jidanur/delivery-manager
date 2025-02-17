@@ -19,12 +19,12 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
       sx={{
         mt: 3,
         mb: 2,
-        backgroundColor: "#4B5A6A", // Primary color
-        color: "#FFFFFF", // High contrast text
+        backgroundColor: "#A2D2FF", // Primary color
+        color: "#3A4856", // High contrast text
         borderRadius: "50px",
         transition: "all 0.3s ease-in-out",
         "&:hover": {
-          backgroundColor: "#3A4856", // Hover color
+          backgroundColor: "#89C2FF", // Slightly lighter shade for hover
           transform: "scale(1.05)",
         },
       }}

@@ -1,8 +1,5 @@
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
-  Avatar,
   Box,
-  Button,
   Container,
   FormControl,
   FormHelperText,
@@ -16,8 +13,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userService } from "../../services/userService"; // Adjust the import path accordingly
-import { UserData, UserInfo } from "../../types/userInterfaces"; // Assuming the types are in a 'types.ts' file
+import { userService } from "../../services/userService";
+import { UserData, UserInfo } from "../../types/userInterfaces";
+import StyledButton from "../common/button/StyledButton";
 
 function Signup() {
   const [formData, setFormData] = useState<UserData>({
@@ -34,37 +32,18 @@ function Signup() {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | { name: string; value: unknown }>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevData) => {
-  //     if (name === "role") {
-  //       return { ...prevData, role: value as string };
-  //     }
-      
-  //     if (name.startsWith("info.")) {
-  //       const field = name.split(".")[1];
-  //       return {
-  //         ...prevData,
-  //         info: { ...prevData.info, [field]: value },
-  //       };
-  //     }
-  //     return { ...prevData, [name]: value };
-  //   });
-  // };
-
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent
   ) => {
-    const {name, value} = e.target ;
+    const { name, value } = e.target;
 
     setFormData((prevData) => {
       if (name === "role") {
         return { ...prevData, role: value as string };
       }
-      
+
       if (name.startsWith("info.")) {
         const field = name.split(".")[1];
         return {
@@ -95,7 +74,7 @@ function Signup() {
     try {
       const userInfo: UserInfo = await userService.createUser(formData);
       console.log("Signup successful", userInfo);
-      navigate("/login");  // Redirect to login after successful signup
+      navigate("/login"); // Redirect to login after successful signup
     } catch (error) {
       console.error("Error during signup:", error);
       setError("Signup failed. Please try again.");
@@ -106,24 +85,29 @@ function Signup() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign Up
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{ color: "#3A4856", mb: 2 }}
+        >
+          Create an Account
         </Typography>
         {error && (
-          <Typography color="error" variant="body2">
+          <Typography
+            color="error"
+            variant="body2"
+            sx={{ textAlign: "center", mb: 2 }}
+          >
             {error}
           </Typography>
         )}
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
             margin="normal"
             required
@@ -135,6 +119,13 @@ function Signup() {
             value={formData.username}
             onChange={handleChange}
             autoFocus
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -147,6 +138,13 @@ function Signup() {
             autoComplete="new-password"
             value={formData.password}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -157,6 +155,13 @@ function Signup() {
             id="name"
             value={formData.info.name}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -168,6 +173,13 @@ function Signup() {
             autoComplete="email"
             value={formData.info.email}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -178,6 +190,13 @@ function Signup() {
             id="phone"
             value={formData.info.phone}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
           <TextField
             margin="normal"
@@ -187,12 +206,30 @@ function Signup() {
             id="address"
             value={formData.info.address || ""}
             onChange={handleChange}
+            sx={{
+              backgroundColor: "#F5F7FA",
+              borderRadius: 1,
+              "& .MuiInputBase-input": { color: "#3A4856" },
+              "& .MuiInputLabel-root": { color: "#3A4856" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#9EADBD" },
+            }}
           />
 
-          {/* Role Selection Dropdown */}
           <FormControl fullWidth margin="normal" required error={!!error}>
-            <InputLabel>Role</InputLabel>
-            <Select name="role" value={formData.role} onChange={handleChange} label="Role">
+            <InputLabel sx={{ color: "#3A4856" }}>Role</InputLabel>
+            <Select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              sx={{
+                backgroundColor: "#F5F7FA",
+                borderRadius: 1,
+                "& .MuiSelect-select": { color: "#3A4856" },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#9EADBD",
+                },
+              }}
+            >
               <MenuItem value="manager">Manager</MenuItem>
               <MenuItem value="client">Client</MenuItem>
               <MenuItem value="driver">Driver</MenuItem>
@@ -200,15 +237,8 @@ function Signup() {
             {error && <FormHelperText>{error}</FormHelperText>}
           </FormControl>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
-          <Link href="/login" variant="body2">
+          <StyledButton type="submit">Sign Up</StyledButton>
+          <Link href="/login" variant="body2" sx={{ color: "#3A4856" }}>
             Already have an account? Sign In
           </Link>
         </Box>

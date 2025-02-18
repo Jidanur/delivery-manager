@@ -7,11 +7,10 @@ import {
   ListItemButton,
   ListItemText,
   Box,
-  Button,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { ReactNode } from "react";
-import AltLogo from "./logo/AltLogo"; // Import AltLogo component
+import AltLogo from "../logo/AltLogo";
+import StyledButton from "../button/StyledButton";
 
 interface SidebarProps {
   sections: string[];
@@ -35,7 +34,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* AppBar for the top section */}
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: "#A2D2FF",
+          color: "#3A4856",
+        }}
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
@@ -75,15 +78,9 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Box>
         <Box sx={{ marginTop: "auto", padding: 2 }}>
           {children}
-          <Button
-            fullWidth
-            variant="contained"
-            color="secondary"
-            component={Link}
-            to={logoutPath}
-          >
+          <StyledButton fullWidth color="secondary" to={logoutPath}>
             Logout
-          </Button>
+          </StyledButton>
         </Box>
       </Drawer>
     </Box>

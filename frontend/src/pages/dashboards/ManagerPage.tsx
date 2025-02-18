@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/common/Sidebar";
-import SectionLayout from "../../components/common/section/SectionLayout";
-import TableWithActions from "../../components/common/table/TableWithActions";
+import Sidebar from "../../components/common/sidebar/Sidebar";
+import SectionLayout from "../../components/section/SectionLayout";
+import TableWithActions from "../../components/table/TableWithActions";
 import { packageService } from "../../services/packageService";
 import { userService } from "../../services/userService";
 

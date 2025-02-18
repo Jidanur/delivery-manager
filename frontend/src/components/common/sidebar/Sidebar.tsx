@@ -9,8 +9,8 @@ import {
   Box,
 } from "@mui/material";
 import { ReactNode } from "react";
-import AltLogo from "./logo/AltLogo";
-import StyledButton from "./button/StyledButton";
+import AltLogo from "../logo/AltLogo";
+import StyledButton from "../button/StyledButton";
 
 interface SidebarProps {
   sections: string[];

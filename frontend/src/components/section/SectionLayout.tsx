@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Paper } from "@mui/material";
 import { ReactNode } from "react";
-import FabAddButton from "../button/FabAddButton";
+import FabAddButton from "../common/button/FabAddButton";
 
 interface SectionLayoutProps {
   heading: string;

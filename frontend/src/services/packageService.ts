@@ -55,8 +55,7 @@ export const packageService = {
       const response = await apiClient.get("/package/myPackages");
       return response.data;
     } catch (error) {
-      handleApiError(error as AxiosError);
-      return [];
+      return handleApiError(error as AxiosError);
     }
   },
 
@@ -65,8 +64,8 @@ export const packageService = {
       const response = await apiClient.get("/package/getAll");
       return response.data;
     } catch (error) {
-      handleApiError(error as AxiosError);
-      return [];
+      return handleApiError(error as AxiosError);
+      
     }
   },
 };

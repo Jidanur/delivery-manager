@@ -1,23 +1,23 @@
 import {
   Box,
+  CircularProgress,
   Container,
+  MenuItem,
   Paper,
   TextField,
   Typography,
-  MenuItem,
-  CircularProgress,
 } from "@mui/material";
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import SubmitButton from "../../components/common/button/SubmitButton";
 import { packageService } from "../../services/packageService";
 import { userService } from "../../services/userService";
 import {
-  PackageData,
-  ServiceType,
   DeliveryStatus,
   DeliveryZone,
+  PackageData,
+  ServiceType,
 } from "../../types/packageInterfaces";
-import SubmitButton from "../../components/common/button/SubmitButton";
 
 const CreatePackagePage = () => {
   const [packageData, setPackageData] = useState<PackageData>({
@@ -46,11 +46,10 @@ const CreatePackagePage = () => {
         setDrivers(allUsers.filter((user: any) => user.role === "driver"));
         if (userRole === "client") {
           const client = allUsers.find(
-            (user: any) => user.user_id === parseInt(userId)
-          );
+            (user: any) => user.user_id === userId);
           setPackageData((prevData) => ({
             ...prevData,
-            client_id: client.client.client_id,
+            client_id: client.client_id,
           }));
         }
       } catch (error) {
@@ -70,7 +69,7 @@ const CreatePackagePage = () => {
   ) => {
     const { name, value } = e.target;
     console.log(`Changing ${name} to ${value}`);
-    setPackageData((prevData) => ({ ...prevData, [name]: value }));
+    setPackageData((prevData) => ({ ...prevData, [name]: ["client_id", "driver_id"].includes(name) ? parseInt(value) : value,}));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -147,8 +146,8 @@ const CreatePackagePage = () => {
                   >
                     {clients.map((client) => (
                       <MenuItem
-                        key={client.client.client_id}
-                        value={client.client.client_id}
+                        key={client.client?.client_id}  
+                        value={client.client?.client_id}
                       >
                         {client.username}
                       </MenuItem>
@@ -165,8 +164,8 @@ const CreatePackagePage = () => {
                   >
                     {drivers.map((driver) => (
                       <MenuItem
-                        key={driver.driver.driver_id}
-                        value={driver.driver.driver_id}
+                        key={driver.driver?.driver_id}
+                        value={driver.driver?.driver_id}
                       >
                         {driver.username}
                       </MenuItem>

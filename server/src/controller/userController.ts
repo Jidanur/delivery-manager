@@ -178,7 +178,15 @@ export const deleteUser = async (req: any, res: any) => {
     });
 
     if (currUser?.role == "manager") {
-      const UserTodelete = await userRepository.findOneBy({ user_id: id });
+      const UserTodelete = await userRepository.findOne({
+        where: [
+          { user_id: id },
+          { driver: { driver_id: id } },
+          { client: { client_id: id } }
+        ],
+        relations: ["client", "driver"]
+      });
+
       await userRepository.delete({ user_id: UserTodelete?.user_id });
     } else if (id != currUser?.user_id) {
       await queryRunner.rollbackTransaction();

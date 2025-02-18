@@ -3,8 +3,10 @@
 ///getting package -- url, generate qr-url, checking access
 
 import { AppDataSource } from "../config/ormconfig";
-import { Package, ServiceType } from "../models/Package";
+import { Driver } from "../models/Driver";
+import { Package } from "../models/Package";
 import { User } from "../models/User";
+import { ServiceType } from "../types/express/PackageInterface";
 import { validateFields } from "../utils/validationUtils";
 
 export const createPackage = async (req: any, res: any) => {
@@ -39,10 +41,18 @@ export const createPackage = async (req: any, res: any) => {
     const newPackage = packageRepository.create({
       delivery_address: packageInfo.delivery_address,
       delivery_zone: packageInfo.delivery_zone || null,
-      service_type: packageInfo.service_type || ServiceType.regular,
-      client_id: curr_client?.client_id,
+      service_type: packageInfo.service_type || ServiceType.STANDARD,
+      client_id: curr_client?.client_id || packageInfo.client_id,
     });
 
+    if(packageInfo.driver_id){
+      const driverRepository = AppDataSource.getRepository(Driver);
+      const cuur_driver = await driverRepository.findOne({
+        where: { driver_id: packageInfo.driver_id },
+      });
+
+      if (cuur_driver) newPackage.driver = cuur_driver;
+    }
     const savedPackage = await packageRepository.save(newPackage);
 
     return res.status(201).json({
@@ -243,13 +253,13 @@ export const myPackages = async (req: any, res: any) => {
       // Fetch the client entity linked to the user
       packages = await packageRepository.find({
         where: { client: { client_id: curr_user.client.client_id } },
-        relations: ["driver"],
+        relations: ["driver", "client"],
       });
     } else if (userPayload.role === "driver") {
       // Fetch packages assigned to the driver
       packages = await packageRepository.find({
         where: { driver: { driver_id: curr_user.driver.driver_id } },
-        relations: ["client"],
+        relations: ["client", "driver"],
       });
     } else {
       return res.status(403).json({

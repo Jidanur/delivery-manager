@@ -1,19 +1,8 @@
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Client } from "./Client";
 import { Driver } from "./Driver";
+import { DeliveryStatus, DeliveryZone, ServiceType } from "../types/express/PackageInterface";
 
-export enum DeliveryStatus {
-  Pending = "pending",
-  InTransit = "in_transit",
-  Delivered = "delivered",
-}
-
-export enum ServiceType {
-  regular = "regular",
-  SameDay = "same-day",
-  NextDay = "next-day",
-  Urgent = "urgent",
-}
 
 @Entity("packages")
 @Index("idx_packages_zone", ["delivery_zone"]) // Index for delivery zone
@@ -27,10 +16,10 @@ export class Package {
   @Column("text")
   delivery_address!: string;
 
-  @Column({ type: "varchar", length: 3, default: null })
-  delivery_zone!: string ;
+  @Column({ type: "varchar", length: 10, default: null })
+  delivery_zone!: DeliveryZone ;
 
-  @Column({ type: "varchar", length: 20, default: DeliveryStatus.Pending })
+  @Column({ type: "varchar", length: 20, default: DeliveryStatus.PENDING })
   delivery_status!: DeliveryStatus;
 
   @Column({ type: "varchar", length: 50})

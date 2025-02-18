@@ -44,7 +44,7 @@ CREATE TABLE drivers (
 CREATE TABLE packages (
     package_id SERIAL PRIMARY KEY,
     delivery_address TEXT NOT NULL,
-    delivery_zone VARCHAR(3) DEFAULT NULL,
+    delivery_zone VARCHAR(10) DEFAULT NULL,
     delivery_status VARCHAR(20) DEFAULT 'pending', -- e.g., pending, in_transit, delivered
     service_type VARCHAR(50),
     client_id INT REFERENCES clients(client_id) ON DELETE SET NULL,

@@ -5,7 +5,9 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface ConfirmationDialogProps {
   open: boolean;
@@ -31,8 +33,19 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle id="alert-dialog-title" sx={{ fontWeight: "bold" }}>
+      <DialogTitle
+        id="alert-dialog-title"
+        sx={{
+          fontWeight: "bold",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         {title}
+        <IconButton onClick={onClose} sx={{ color: "grey.500" }}>
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description" sx={{ mb: 2 }}>

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import Sidebar from "../../components/common/sidebar/Sidebar";
+import Sidebar from "../../components/sidebar/Sidebar";
 import SectionLayout from "../../components/section/SectionLayout";
 import GeneralTable from "../../components/table/GeneralTable";
 import { packageService } from "../../services/packageService";
@@ -76,7 +76,6 @@ const DriverPage = () => {
         sections={sections}
         selectedSection={selectedSection}
         onNavigate={handleNavigation}
-        logoutPath="/logout"
         heading="Driver Dashboard"
       />
       <SectionLayout

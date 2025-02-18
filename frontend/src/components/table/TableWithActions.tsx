@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { CircularProgress, Typography, IconButton } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import GeneralTable from "./GeneralTable";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ConfirmationDialog from "../popup/ConfirmationPopup";
+import ConfirmationDialog from "../common/popup/ConfirmationPopup";
+import DeleteButton from "../common/button/DeleteButton";
 
 interface TableWithActionsProps {
   columns: any[];
@@ -47,15 +47,12 @@ const TableWithActions: React.FC<TableWithActionsProps> = ({
             columns={columns}
             data={data}
             actions={(row) => (
-              <IconButton
-                color="error"
+              <DeleteButton
                 onClick={(e) => {
                   e.stopPropagation();
                   handleClickOpen(row.package_id);
                 }}
-              >
-                <DeleteIcon />
-              </IconButton>
+              />
             )}
           />
           <ConfirmationDialog

@@ -9,14 +9,14 @@ import {
   Box,
 } from "@mui/material";
 import { ReactNode } from "react";
-import AltLogo from "../logo/AltLogo";
-import StyledButton from "../button/StyledButton";
+import AltLogo from "../common/logo/AltLogo";
+import LogoutButton from "../common/button/LogoutButton";
+import UserAvatar from "../common/avatar/UserAvatar";
 
 interface SidebarProps {
   sections: string[];
   selectedSection: string;
   onNavigate: (section: string) => void;
-  logoutPath: string;
   heading: string;
   children?: ReactNode;
 }
@@ -25,7 +25,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   sections,
   selectedSection,
   onNavigate,
-  logoutPath,
   heading,
   children,
 }) => {
@@ -40,10 +39,11 @@ const Sidebar: React.FC<SidebarProps> = ({
           color: "#3A4856",
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6" noWrap component="div">
             {heading}
           </Typography>
+          <UserAvatar />
         </Toolbar>
       </AppBar>
 
@@ -76,11 +76,16 @@ const Sidebar: React.FC<SidebarProps> = ({
             ))}
           </List>
         </Box>
-        <Box sx={{ marginTop: "auto", padding: 2 }}>
+        <Box
+          sx={{
+            marginTop: "auto",
+            padding: 2,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           {children}
-          <StyledButton fullWidth color="secondary" to={logoutPath}>
-            Logout
-          </StyledButton>
+          <LogoutButton />
         </Box>
       </Drawer>
     </Box>

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/common/sidebar/Sidebar";
+import Sidebar from "../../components/sidebar/Sidebar";
 import SectionLayout from "../../components/section/SectionLayout";
 import TableWithActions from "../../components/table/TableWithActions";
 import { packageService } from "../../services/packageService";

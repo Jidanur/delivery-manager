@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CircularProgress, Typography, IconButton } from "@mui/material";
 import GeneralTable from "./GeneralTable";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ConfirmationDialog from "../popup/ConfirmationPopup";
+import ConfirmationDialog from "../common/popup/ConfirmationPopup";
 
 interface TableWithActionsProps {
   columns: any[];

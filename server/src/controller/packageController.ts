@@ -272,7 +272,7 @@ export const getAllPackages = async (req: any, res: any) => {
     const userPayload = req.user;
     const packageRepository = AppDataSource.getRepository(Package);
 
-    if (userPayload.role !== "manager" || userPayload.role !== "driver") { // driver need to see if more order available
+    if (userPayload.role === "client") { // driver need to see if more order available
       return res.status(403).json({ message: "Access denied" });
     }
 

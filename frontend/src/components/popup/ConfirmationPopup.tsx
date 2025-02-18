@@ -40,6 +40,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          padding: "16px 24px",
         }}
       >
         {title}
@@ -47,12 +48,12 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ padding: "16px 24px" }}>
         <DialogContentText id="alert-dialog-description" sx={{ mb: 2 }}>
           {description}
         </DialogContentText>
       </DialogContent>
-      <DialogActions sx={{ justifyContent: "space-between", padding: 2 }}>
+      <DialogActions sx={{ padding: "8px 24px" }}>
         <Button onClick={onClose} color="primary" variant="outlined">
           Cancel
         </Button>

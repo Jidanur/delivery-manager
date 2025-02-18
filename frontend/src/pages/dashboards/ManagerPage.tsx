@@ -108,7 +108,6 @@ const ManagerPage = () => {
         sections={sections}
         selectedSection={selectedSection}
         onNavigate={handleNavigation}
-        logoutPath="/logout"
         heading="Manager Dashboard"
       />
       <SectionLayout

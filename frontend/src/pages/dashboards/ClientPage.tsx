@@ -77,7 +77,6 @@ const ClientPage = () => {
         sections={sections}
         selectedSection={selectedSection}
         onNavigate={handleNavigation}
-        logoutPath="/logout"
         heading="Client Dashboard"
       />
       <SectionLayout

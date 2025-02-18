@@ -76,7 +76,6 @@ const DriverPage = () => {
         sections={sections}
         selectedSection={selectedSection}
         onNavigate={handleNavigation}
-        logoutPath="/logout"
         heading="Driver Dashboard"
       />
       <SectionLayout

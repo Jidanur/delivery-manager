@@ -10,13 +10,12 @@ import {
 } from "@mui/material";
 import { ReactNode } from "react";
 import AltLogo from "../common/logo/AltLogo";
-import StyledButton from "../common/button/StyledButton";
+import LogoutButton from "../common/button/LogoutButton";
 
 interface SidebarProps {
   sections: string[];
   selectedSection: string;
   onNavigate: (section: string) => void;
-  logoutPath: string;
   heading: string;
   children?: ReactNode;
 }
@@ -25,7 +24,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   sections,
   selectedSection,
   onNavigate,
-  logoutPath,
   heading,
   children,
 }) => {
@@ -76,11 +74,16 @@ const Sidebar: React.FC<SidebarProps> = ({
             ))}
           </List>
         </Box>
-        <Box sx={{ marginTop: "auto", padding: 2 }}>
+        <Box
+          sx={{
+            marginTop: "auto",
+            padding: 2,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           {children}
-          <StyledButton fullWidth color="secondary" to={logoutPath}>
-            Logout
-          </StyledButton>
+          <LogoutButton />
         </Box>
       </Drawer>
     </Box>

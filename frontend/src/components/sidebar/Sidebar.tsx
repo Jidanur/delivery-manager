@@ -11,6 +11,7 @@ import {
 import { ReactNode } from "react";
 import AltLogo from "../common/logo/AltLogo";
 import LogoutButton from "../common/button/LogoutButton";
+import UserAvatar from "../common/avatar/UserAvatar";
 
 interface SidebarProps {
   sections: string[];
@@ -38,10 +39,11 @@ const Sidebar: React.FC<SidebarProps> = ({
           color: "#3A4856",
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6" noWrap component="div">
             {heading}
           </Typography>
+          <UserAvatar />
         </Toolbar>
       </AppBar>
 

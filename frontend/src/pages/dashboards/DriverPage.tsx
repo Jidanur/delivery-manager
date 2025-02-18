@@ -1,10 +1,15 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import Sidebar from "../components/common/Sidebar";
-import SectionLayout from "../components/common/section/SectionLayout";
-import GeneralTable from "../components/common/table/GeneralTable";
-import { packageService } from "../services/packageService";
-import { DeliveryStatus, DeliveryZone, PackageInfo, ServiceType } from '../types/packageInterfaces';
+import Sidebar from "../../components/common/sidebar/Sidebar";
+import SectionLayout from "../../components/section/SectionLayout";
+import GeneralTable from "../../components/table/GeneralTable";
+import { packageService } from "../../services/packageService";
+import {
+  DeliveryStatus,
+  DeliveryZone,
+  PackageInfo,
+  ServiceType,
+} from "../../types/packageInterfaces";
 
 const DriverPage = () => {
   const [selectedSection, setSelectedSection] = useState("My Orders");
@@ -20,8 +25,7 @@ const DriverPage = () => {
         if (selectedSection === "My Orders") {
           response = await packageService.getMyPackages();
           response = response.data;
-        } 
-        else if (selectedSection === "Available Orders") {
+        } else if (selectedSection === "Available Orders") {
           response = await packageService.getAllPackages();
           response = response.data.filter(
             (pkg: PackageInfo) => pkg.driver === null
@@ -36,10 +40,9 @@ const DriverPage = () => {
             delivery_zone: pkg.delivery_zone || DeliveryZone.ZONE_1,
             delivery_status: pkg.delivery_status || DeliveryStatus.PENDING,
             pickup_time: pkg.pickup_time || "N/A",
-            delivery_time: pkg.delivery_time || "N/A"
-
+            delivery_time: pkg.delivery_time || "N/A",
           }));
-        
+
           setData(formattedDeliveries);
         } else {
           console.error("Expected an array but got:", response);

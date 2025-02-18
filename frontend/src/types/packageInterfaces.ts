@@ -21,13 +21,14 @@ export enum DeliveryZone {
 export interface PackageInfo {
   package_id: number;
   delivery_address: string;
-  delivery_zone: string;
-  delivery_status: string;
-  service_type: string;
+  delivery_zone: DeliveryZone;
+  delivery_status: DeliveryStatus;
+  service_type: ServiceType;
   client_id?: number;
   driver_id?: number;
-  created_at: string;
-  updated_at: string;
+  driver?:any;
+  created_at?: string;
+  updated_at?: string;
   pickup_time?: string;
   delivery_time?: string;
   order_instructions?: string;

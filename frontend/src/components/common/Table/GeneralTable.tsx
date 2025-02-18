@@ -18,6 +18,7 @@ interface Column {
 interface GeneralTableProps {
   columns: Column[];
   data: any[];
+  loading?:boolean;
   actions?: (row: any) => JSX.Element;
 }
 

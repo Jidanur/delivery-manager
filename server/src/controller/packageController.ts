@@ -6,7 +6,6 @@ import { AppDataSource } from "../config/ormconfig";
 import { Package, ServiceType } from "../models/Package";
 import { User } from "../models/User";
 import { validateFields } from "../utils/validationUtils";
-import { checkIfExists } from "../utils/repositoryUtils"; //TODO this should be used to validate if the item already exists or not
 
 export const createPackage = async (req: any, res: any) => {
   const userPayload = req.user;
@@ -273,7 +272,7 @@ export const getAllPackages = async (req: any, res: any) => {
     const userPayload = req.user;
     const packageRepository = AppDataSource.getRepository(Package);
 
-    if (userPayload.role !== "manager") {
+    if (userPayload.role !== "manager" || userPayload.role !== "driver") { // driver need to see if more order available
       return res.status(403).json({ message: "Access denied" });
     }
 
